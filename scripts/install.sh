@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if bun command is available
+if ! command -v bun &> /dev/null; then
+    echo "Error: 'bun' is not installed. Please install it from bun.sh before running this script."
+    exit 1
+fi
+
 # Config
 REPO="101dal/wallon-boutique-backend-public"
 RELEASE_URL="https://github.com/$REPO/releases"
