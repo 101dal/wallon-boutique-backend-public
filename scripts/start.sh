@@ -52,7 +52,7 @@ while true; do
 
   # Start server
   echo $LOG_FILE
-  (cd $ASSETS_DIR && bun run "server.js" | tee -a "../$LOG_FILE" 2>&1 &)
+  (cd $ASSETS_DIR && bun run "server.js" | ccze -m ansi | tee -a "../$LOG_FILE" 2>&1 &)
 
   # Loop
   sleep $CHECK_TIME
