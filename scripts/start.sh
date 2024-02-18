@@ -7,7 +7,7 @@ BACKUP_DIR="./backups"
 LOG_DIR="./logs"
 
 # Every how many seconds it should check the new release
-CHECK_TIME=15
+CHECK_TIME=86400
 
 while true; do
 
