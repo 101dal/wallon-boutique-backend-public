@@ -133,112 +133,111 @@
 <script nonce="109">
     const regularEndpoints = [
         // *** Authentication ***
-        { finished: true, id: "register", url: "/api/v1/auth/register", method: "POST", body: ['username', 'email', 'password', 'firstName', 'lastName', 'level', 'classe'], params: undefined, query: [], files: [] },
-        { finished: true, id: "login", url: "/api/v1/auth/login", method: "POST", body: ['email', 'password'], params: undefined, query: [], files: [] },
-        { finished: true, id: "logout", url: "/api/v1/auth/logout", method: "POST", body: ['token'], params: undefined, query: [], files: [] },
-        { finished: true, id: "deleteAccount", url: "/api/v1/auth/delete", method: "DELETE", body: ['email', 'password'], params: undefined, query: [], files: [] },
+        { finished: true, id: "register", url: "/api/v1/auth/register", method: "POST", body: ['username', 'email', 'password', 'firstName', 'lastName', 'level', 'classe'], params: [], query: [], files: [] },
+        { finished: true, id: "login", url: "/api/v1/auth/login", method: "POST", body: ['email', 'password'], params: [], query: [], files: [] },
+        { finished: true, id: "logout", url: "/api/v1/auth/logout", method: "POST", body: ['token'], params: [], query: [], files: [] },
+        { finished: true, id: "deleteAccount", url: "/api/v1/auth/delete", method: "DELETE", body: ['email', 'password'], params: [], query: [], files: [] },
 
         // *** Products ***
-        { finished: true, id: "getProducts", url: "/api/v1/products", method: "GET", body: [], params: undefined, query: [], files: [] },
-        { finished: true, id: "getProductById", url: "/api/v1/products/get/:id", method: "GET", body: [], params: 'id', query: [], files: [] },
-        { finished: true, id: "searchProducts", url: "/api/v1/products/search", method: "GET", body: [], params: undefined, query: ['name', 'description', 'color', 'size', 'price', 'type'], files: [] },
-        { finished: true, id: "getProductImage", url: "/api/v1/images", method: "GET", body: [], params: undefined, query: ['product_name', 'image_id'], files: [] },
+        { finished: true, id: "getProducts", url: "/api/v1/products", method: "GET", body: [], params: [], query: [], files: [] },
+        { finished: true, id: "getProductById", url: "/api/v1/products/get/:id", method: "GET", body: [], params: ['id'], query: [], files: [] },
+        { finished: true, id: "searchProducts", url: "/api/v1/products/search", method: "GET", body: [], params: [], query: ['name', 'description', 'color', 'size', 'price', 'type'], files: [] },
+        { finished: true, id: "getProductImage", url: "/api/v1/images", method: "GET", body: [], params: [], query: ['product_name', 'image_id'], files: [] },
 
         // *** Cart ***
-        { finished: true, id: "addToCart", url: "/api/v1/cart/add", method: "POST", body: ['product_id', 'color', 'size', 'quantity'], params: undefined, query: [], files: [] },
-        { finished: true, id: "getCart", url: "/api/v1/cart/get", method: "POST", body: [], params: undefined, query: [], files: [] },
-        { finished: true, id: "removeFromCart", url: "/api/v1/cart/remove", method: "DELETE", body: ['cart_id'], params: undefined, query: [], files: [] },
-        { finished: true, id: "checkout", url: "/api/v1/cart/checkout", method: "POST", body: [], params: undefined, query: [], files: [] },
+        { finished: true, id: "addToCart", url: "/api/v1/cart/add", method: "POST", body: ['product_id', 'color', 'size', 'quantity'], params: [], query: [], files: [] },
+        { finished: true, id: "getCart", url: "/api/v1/cart/get", method: "POST", body: [], params: [], query: [], files: [] },
+        { finished: true, id: "removeFromCart", url: "/api/v1/cart/remove", method: "DELETE", body: ['cart_id'], params: [], query: [], files: [] },
+        { finished: true, id: "checkout", url: "/api/v1/cart/checkout", method: "POST", body: [], params: [], query: [], files: [] },
 
         // *** Order ***
-        { finished: true, id: "getOrderHistory", url: "/api/v1/orders/history", method: "POST", body: [], params: undefined, query: [], files: [] },
+        { finished: true, id: "getOrderHistory", url: "/api/v1/orders/history", method: "POST", body: [], params: [], query: [], files: [] },
 
         // *** Review ***
-        { finished: true, id: "getUserReviews", url: "/api/v1/reviews/me", method: "POST", body: [], params: undefined, query: [], files: [] },
-        { finished: true, id: "getProductReviews", url: "/api/v1/reviews/product/:id", method: "GET", body: [], params: 'id', query: [], files: [] },
-        { finished: true, id: "createReview", url: "/api/v1/reviews/create", method: "POST", body: ['review', 'rating', 'product_id'], params: undefined, query: [], files: [] },
-        { finished: true, id: "modifyReview", url: "/api/v1/reviews/:id", method: "PUT", body: ['review', 'rating'], params: 'id', query: [], files: [] },
-        { finished: true, id: "deleteReview", url: "/api/v1/reviews/delete/:id", method: "DELETE", body: [], params: 'id', query: [], files: [] },
+        { finished: true, id: "getUserReviews", url: "/api/v1/reviews/me", method: "POST", body: [], params: [], query: [], files: [] },
+        { finished: true, id: "getProductReviews", url: "/api/v1/reviews/product/:id", method: "GET", body: [], params: ['id'], query: [], files: [] },
+        { finished: true, id: "createReview", url: "/api/v1/reviews/create", method: "POST", body: ['review', 'rating', 'product_id'], params: [], query: [], files: [] },
+        { finished: true, id: "modifyReview", url: "/api/v1/reviews/:id", method: "PUT", body: ['review', 'rating'], params: ['id'], query: [], files: [] },
+        { finished: true, id: "deleteReview", url: "/api/v1/reviews/delete/:id", method: "DELETE", body: [], params: ['id'], query: [], files: [] },
 
         // *** Profile ***
-        { finished: true, id: "getUserInfo", url: "/api/v1/users/me", method: "POST", body: [], params: undefined, query: [], files: [] },
-        { finished: true, id: "updateUserInfo", url: "/api/v1/users/update", method: "PUT", body: ['username', 'email', 'password'], params: undefined, query: [], files: [] },
+        { finished: true, id: "getUserInfo", url: "/api/v1/users/me", method: "POST", body: [], params: [], query: [], files: [] },
+        { finished: true, id: "updateUserInfo", url: "/api/v1/users/update", method: "PUT", body: ['username', 'email', 'password'], params: [], query: [], files: [] },
 
         // *** Product recommendations ***
-        { finished: false, id: "getProductRecommendations", url: "/api/v1/products/recommendations", method: "GET", body: [], params: undefined, query: [], files: [] },
+        { finished: false, id: "getProductRecommendations", url: "/api/v1/products/recommendations", method: "GET", body: [], params: [], query: [], files: [] },
 
         // *** Support ***
-        { finished: true, id: "createSupportMessage", url: "/api/v1/supports/create", method: "POST", body: ['message'], params: undefined, query: [], files: [] },
+        { finished: true, id: "createSupportMessage", url: "/api/v1/supports/create", method: "POST", body: ['message'], params: [], query: [], files: [] },
 
         // *** Token ***
-        { finished: true, id: "getUserTokens", url: "/api/v1/tokens/me", method: "POST", body: [], params: undefined, query: [], files: [], token: true, },
+        { finished: true, id: "getUserTokens", url: "/api/v1/tokens/me", method: "POST", body: [], params: [], query: [], files: [], token: true, },
     ];
 
     const employeesEndpoints = [
         // *** Users ***
-        { finished: true, id: "getOrders", url: "/api/v1/orders/all", method: "POST", body: [], params: undefined, query: [], files: [], token: true },
-        { finished: true, id: "updateOrderStatus", url: "/api/v1/orders/update/status/:id", method: "PUT", body: ['status'], params: 'id', query: [], files: [], token: true },
-        { finished: true, id: "getSpecificOrder", url: "/api/v1/orders/:id", method: "POST", body: [], params: 'id', query: [], files: [], token: true },
+        { finished: true, id: "getOrders", url: "/api/v1/orders/all", method: "POST", body: [], params: [], query: [], files: [], token: true },
+        { finished: true, id: "updateOrderStatus", url: "/api/v1/orders/update/status/:id", method: "PUT", body: ['status'], params: ['id'], query: [], files: [], token: true },
+        { finished: true, id: "getSpecificOrder", url: "/api/v1/orders/:id", method: "POST", body: [], params: ['id'], query: [], files: [], token: true },
 
         // *** Users ***
-        { finished: true, id: "getAllCarts", url: "/api/v1/carts/all", method: "POST", body: [], params: undefined, query: [], files: [], token: true },
-        { finished: true, id: "getUserCarts", url: "/api/v1/carts/user/:id", method: "POST", body: [], params: 'id', query: [], files: [], token: true }
+        { finished: true, id: "getAllCarts", url: "/api/v1/carts/all", method: "POST", body: [], params: [], query: [], files: [], token: true },
+        { finished: true, id: "getUserCarts", url: "/api/v1/carts/user/:id", method: "POST", body: [], params: ['id'], query: [], files: [], token: true }
     ];
 
     const adminEndpoints = [
         // *** Products ***
-        { finished: true, id: "createProduct", url: "/api/v1/products/create", method: "POST", body: ['name', 'description', 'colors', 'sizes', 'price', 'inventory', 'type'], params: undefined, query: [], files: ['images'], token: true },
-        { finished: true, id: "updateProduct", url: "/api/v1/products/update/:id", method: "PUT", body: ['name', 'description', 'colors', 'sizes', 'price', 'inventory', 'type'], params: 'id', query: [], files: ['images'], token: true },
-        { finished: true, id: "updateProductInventory", url: "/api/v1/products/inventory/:id", method: "PUT", body: ['inventory'], params: 'id', query: [], files: [], token: true },
-        { finished: true, id: "deleteProduct", url: "/api/v1/products/delete/:id", method: "DELETE", body: [], params: 'id', query: [], files: [], token: true },
+        { finished: true, id: "createProduct", url: "/api/v1/products/create", method: "POST", body: ['name', 'description', 'colors', 'sizes', 'price', 'inventory', 'type'], params: [], query: [], files: ['images'], token: true },
+        { finished: true, id: "updateProduct", url: "/api/v1/products/update/:id", method: "PUT", body: ['name', 'description', 'colors', 'sizes', 'price', 'inventory', 'type'], params: ['id'], query: [], files: ['images'], token: true },
+        { finished: true, id: "updateProductInventory", url: "/api/v1/products/inventory/:id", method: "PUT", body: ['inventory'], params: ['id'], query: [], files: [], token: true },
+        { finished: true, id: "deleteProduct", url: "/api/v1/products/delete/:id", method: "DELETE", body: [], params: ['id'], query: [], files: [], token: true },
 
         // *** Users ***
-        { finished: true, id: "getAllUsers", url: "/api/v1/users/all", method: "POST", body: [], params: undefined, query: [], files: [], token: true },
-        { finished: true, id: "getUserInfoById", url: "/api/v1/users/infos/:id", method: "POST", body: [], params: 'id', query: [], files: [], token: true },
-        { finished: true, id: "updateUserInfoById", url: "/api/v1/users/update/:id", method: "PUT", body: ['username', 'email', 'password', 'role', 'firstName', 'lastName', 'level', 'classe'], params: 'id', query: [], files: [], token: true },
-        { finished: true, id: "createUser", url: "/api/v1/users/create", method: "POST", body: ['username', 'email', 'password', 'role', 'firstName', 'lastName', 'level', 'classe'], params: undefined, query: [], files: [], token: true },
-        { finished: true, id: "deleteUser", url: "/api/v1/users/delete/:id", method: "DELETE", body: [], params: 'id', query: [], files: [], token: true },
-        { finished: true, id: "searchUsers", url: "/api/v1/users/search", method: "POST", body: [], params: undefined, query: ['username', 'email', 'firstName', 'lastName', 'level', 'classe'], files: [], token: true },
-        { finished: true, id: "updateUserRole", url: "/api/v1/users/role/:id", method: "PUT", body: ['role'], params: 'id', query: [], files: [], token: true },
+        { finished: true, id: "getAllUsers", url: "/api/v1/users/all", method: "POST", body: [], params: [], query: [], files: [], token: true },
+        { finished: true, id: "getUserInfoById", url: "/api/v1/users/infos/:id", method: "POST", body: [], params: ['id'], query: [], files: [], token: true },
+        { finished: true, id: "updateUserInfoById", url: "/api/v1/users/update/:id", method: "PUT", body: ['username', 'email', 'password', 'role', 'firstName', 'lastName', 'level', 'classe'], params: ['id'], query: [], files: [], token: true },
+        { finished: true, id: "createUser", url: "/api/v1/users/create", method: "POST", body: ['username', 'email', 'password', 'role', 'firstName', 'lastName', 'level', 'classe'], params: [], query: [], files: [], token: true },
+        { finished: true, id: "deleteUser", url: "/api/v1/users/delete/:id", method: "DELETE", body: [], params: ['id'], query: [], files: [], token: true },
+        { finished: true, id: "searchUsers", url: "/api/v1/users/search", method: "POST", body: [], params: [], query: ['username', 'email', 'firstName', 'lastName', 'level', 'classe'], files: [], token: true },
+        { finished: true, id: "updateUserRole", url: "/api/v1/users/role/:id", method: "PUT", body: ['role'], params: ['id'], query: [], files: [], token: true },
 
         // *** Cart Management ***
-        { finished: true, id: "modifyCartItem", url: "/api/v1/carts/modify/:cart_id", method: "PUT", body: ['user_id', 'product_id', 'color', 'size', 'quantity'], params: 'cart_id', query: [], files: [], token: true },
-        { finished: true, id: "deleteCartItem", url: "/api/v1/carts/delete/:cart_id", method: "DELETE", body: [], params: 'cart_id', query: [], files: [], token: true },
-        { finished: true, id: "deleteUserCarts", url: "/api/v1/carts/delete/user/:user_id", method: "DELETE", body: [], params: 'user_id', query: [], files: [], token: true },
-        { finished: true, id: "searchCarts", url: "/api/v1/carts/search", method: "POST", body: ['product_id', 'quantity_min', 'quantity_max', 'size', 'color', 'user_id'], params: undefined, query: [], files: [], token: true },
+        { finished: true, id: "modifyCartItem", url: "/api/v1/carts/modify/:cart_id", method: "PUT", body: ['user_id', 'product_id', 'color', 'size', 'quantity'], params: ['cart_id'], query: [], files: [], token: true },
+        { finished: true, id: "deleteCartItem", url: "/api/v1/carts/delete/:cart_id", method: "DELETE", body: [], params: ['cart_id'], query: [], files: [], token: true },
+        { finished: true, id: "deleteUserCarts", url: "/api/v1/carts/delete/user/:user_id", method: "DELETE", body: [], params: ['user_id'], query: [], files: [], token: true },
+        { finished: true, id: "searchCarts", url: "/api/v1/carts/search", method: "POST", body: ['product_id', 'quantity_min', 'quantity_max', 'size', 'color', 'user_id'], params: [], query: [], files: [], token: true },
 
         // *** Orders ***
-        { finished: true, id: "getUserOrders", url: "/api/v1/orders/user/:id", method: "POST", body: [], params: 'id', query: [], files: [], token: true },
-        { finished: true, id: "deleteOrder", url: "/api/v1/orders/delete/:id", method: "DELETE", body: [], params: 'id', query: [], files: [], token: true },
-        { finished: true, id: "updateOrderDetails", url: "/api/v1/orders/update/:id", method: "PUT", body: ['status', 'user_id'], params: 'id', query: [], files: [], token: true },
-        { finished: true, id: "createUserOrder", url: "/api/v1/orders/create/user/:user_id", method: "POST", body: [], params: 'id', query: [], files: [], token: true },
+        { finished: true, id: "getUserOrders", url: "/api/v1/orders/user/:id", method: "POST", body: [], params: ['id'], query: [], files: [], token: true },
+        { finished: true, id: "deleteOrder", url: "/api/v1/orders/delete/:id", method: "DELETE", body: [], params: ['id'], query: [], files: [], token: true },
+        { finished: true, id: "updateOrderDetails", url: "/api/v1/orders/update/:id", method: "PUT", body: ['status', 'user_id'], params: ['id'], query: [], files: [], token: true },
+        { finished: true, id: "createUserOrder", url: "/api/v1/orders/create/user/:user_id", method: "POST", body: [], params: ['id'], query: [], files: [], token: true },
 
 
         // *** Promotions ***
-        { finished: false, id: "createPromotion", url: "/api/v1/promotions/create", method: "POST", body: ['code', 'discount'], params: undefined, query: [], files: [], token: true },
-        { finished: false, id: "deletePromotion", url: "/api/v1/promotions/delete/:id", method: "DELETE", body: [], params: 'id', query: [], files: [], token: true },
+        { finished: false, id: "createPromotion", url: "/api/v1/promotions/create", method: "POST", body: ['code', 'discount'], params: [], query: [], files: [], token: true },
+        { finished: false, id: "deletePromotion", url: "/api/v1/promotions/delete/:id", method: "DELETE", body: [], params: ['id'], query: [], files: [], token: true },
 
         // *** Analytics ***
-        { finished: false, id: "getSalesAnalytics", url: "/api/v1/analytics/sales", method: "POST", body: [], params: undefined, query: [], files: [], token: true },
-        { finished: false, id: "getUserAnalytics", url: "/api/v1/analytics/users", method: "POST", body: [], params: undefined, query: [], files: [], token: true },
+        { finished: false, id: "getSalesAnalytics", url: "/api/v1/analytics/sales", method: "POST", body: [], params: [], query: [], files: [], token: true },
+        { finished: false, id: "getUserAnalytics", url: "/api/v1/analytics/users", method: "POST", body: [], params: [], query: [], files: [], token: true },
 
         // *** Support ***
-        { finished: true, id: "getAllSupportMessages", url: "/api/v1/supports/all", method: "POST", body: [], params: undefined, query: [], files: [], token: true },
-        { finished: true, id: "deleteSupportMessages", url: "/api/v1/supports/delete/:id", method: "DELETE", body: [], params: 'id', query: [], files: [], token: true },
+        { finished: true, id: "getAllSupportMessages", url: "/api/v1/supports/all", method: "POST", body: [], params: [], query: [], files: [], token: true },
+        { finished: true, id: "deleteSupportMessages", url: "/api/v1/supports/delete/:id", method: "DELETE", body: [], params: ['id'], query: [], files: [], token: true },
 
         // *** Review Management (Admin) ***
-        { finished: true, id: "createCustomReview", url: "/api/v1/reviews/create/custom", method: "POST", body: ['review', 'rating', 'user_id', 'product_id'], params: undefined, query: [], files: [], token: true },
-        { finished: true, id: "modifyCustomReview", url: "/api/v1/reviews/modify/custom/:id", method: "PUT", body: ['review', 'rating'], params: 'id', query: [], files: [], token: true },
-        { finished: true, id: "deleteCustomReview", url: "/api/v1/reviews/delete/custom/:id", method: "DELETE", body: [], params: 'id', query: [], files: [], token: true },
-        { finished: true, id: "searchReviews", url: "/api/v1/reviews/search", method: "POST", body: [], params: undefined, query: ['review', 'rating_min', 'rating_max'], files: [], token: true },
+        { finished: true, id: "createCustomReview", url: "/api/v1/reviews/create/custom", method: "POST", body: ['review', 'rating', 'user_id', 'product_id'], params: [], query: [], files: [], token: true },
+        { finished: true, id: "modifyCustomReview", url: "/api/v1/reviews/modify/custom/:id", method: "PUT", body: ['review', 'rating'], params: ['id'], query: [], files: [], token: true },
+        { finished: true, id: "deleteCustomReview", url: "/api/v1/reviews/delete/custom/:id", method: "DELETE", body: [], params: ['id'], query: [], files: [], token: true },
+        { finished: true, id: "searchReviews", url: "/api/v1/reviews/search", method: "POST", body: [], params: [], query: ['review', 'rating_min', 'rating_max'], files: [], token: true },
 
         // *** Token Management for Admins ***
-        { finished: true, id: "getAllTokens", url: "/api/v1/tokens/all", method: "POST", body: [], params: undefined, query: [], files: [], token: true, },
-        { finished: true, id: "revokeToken", url: "/api/v1/tokens/revoke/:id", method: "DELETE", body: [], params: 'id', query: [], files: [], token: true, },
+        { finished: true, id: "getAllTokens", url: "/api/v1/tokens/all", method: "POST", body: [], params: [], query: [], files: [], token: true, },
+        { finished: true, id: "revokeToken", url: "/api/v1/tokens/revoke/:id", method: "DELETE", body: [], params: ['id'], query: [], files: [], token: true, },
     ];
 
-
-
+    
     // Retrieve saved form values from localStorage if available
     const savedToken = localStorage.getItem('token-all');
     if (savedToken) {
@@ -305,19 +304,19 @@
             formElement.append(document.createElement("br"));
         });
 
-        if (endpoint.params) {
+        endpoint.params.forEach(param => {
             const label = document.createElement("label");
-            label.setAttribute("for", endpoint.params);
-            label.textContent = endpoint.params.charAt(0).toUpperCase() + endpoint.params.slice(1) + " (parameter):";
+            label.setAttribute("for", param);
+            label.textContent = param.charAt(0).toUpperCase() + param.slice(1) + " (parameter):";
 
             const input = document.createElement("input");
             input.setAttribute("type", "text");
-            input.id = endpoint.params;
+            input.id = param;
 
             formElement.append(label);
             formElement.append(input);
             formElement.append(document.createElement("br"));
-        }
+        });
 
         const submitButton = document.createElement("button");
         submitButton.setAttribute("type", "submit");
@@ -417,9 +416,11 @@
                 url += '?' + urlQuery;
             }
 
-            // Handle params if specified
-            if (params) {
-                url = url.replace(`:${params.name}`, params.value);
+            // Handle params array if specified
+            if (paramsArr) {
+                paramsArr.forEach(param => {
+                    url = url.replace(`:${param}`, params[param]);
+                });
             }
 
             // Send the API request with the FormData object
@@ -427,8 +428,6 @@
                 method: method,
                 body: (method.toUpperCase() != 'GET') ? formData : undefined // Use FormData object as the request body for file uploads
             });
-
-            console.log(response);
 
             try {
                 const data = await response.json();
