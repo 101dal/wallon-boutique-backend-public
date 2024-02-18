@@ -1,0 +1,67 @@
+LICENSE DU LOGICIEL
+
+1. DÉFINITIONS
+
+Dans la présente licence, les termes suivants ont la signification ci-dessous :
+
+"Logiciel" désigne le programme informatique fourni sous licence par le Concédant, y compris toute mise à jour, modification, amélioration, extension, composant ou portion de celui-ci. 
+
+"Concédant" désigne M. Augustin MICHEZ, auteur et propriétaire exclusif du Logiciel.
+
+"License" désigne le contrat entre le Concédant et le Licencié, constitué par la présente licence et ses conditions générales d'utilisation. 
+
+"Licencié" désigne la personne physique ou morale qui accepte la présente licence.
+
+2. OBJET DE LA LICENSE 
+
+Le Concédant consent au Licencié, qui l'accepte, le droit non exclusif d'utiliser le Logiciel conformément aux conditions générales ci-dessous.
+
+Le droit d'utilisation du Logiciel est personnel, non cessible et non transférable. 
+
+3. PROPRIÉTÉ INTELLECTUELLE
+
+Le Concédant conserve l'intégralité des droits de propriété intellectuelle sur le Logiciel. 
+
+Le Licencié reconnaît que le Logiciel reste la propriété exclusive du Concédant et s'engage à ne pas porter atteinte directement ou indirectement aux droits de propriété intellectuelle du Concédant sur le Logiciel.
+
+Le Licencié n'acquiert aucun droit de propriété intellectuelle sur le Logiciel du fait de l'acceptation de la License.
+
+4. CONDITIONS D'UTILISATION
+
+4.1 Le Licencié ne peut utiliser le Logiciel que conformément à sa destination, telle que décrite dans la documentation fournie par le Concédant.
+
+4.2 Le Licencié ne peut procéder à aucune modification, adaptation, traduction, arrangement, diffusion, décompilation, sans autorisation préalable et écrite du Concédant. 
+
+4.3 Le Licencié ne peut céder, prêter, louer, mettre à disposition ou transférer le Logiciel à un tiers, à titre onéreux ou gratuit.
+
+4.4 Le Licencié ne peut corriger lui-même les éventuelles anomalies du Logiciel. Il doit signaler ces anomalies au Concédant qui procédera aux corrections nécessaires.
+
+4.5 Le Licencié ne peut utiliser le Logiciel que sur un seul poste individuel.
+
+4.6 Le Licencié ne peut réaliser aucune reproduction permanente ou provisoire du Logiciel en tout ou partie, par quelque moyen que ce soit. 
+
+4.7 Le Licencié ne peut utiliser le Logiciel à des fins commerciales ou professionnelles sans autorisation écrite préalable du Concédant.
+
+5. DURÉE
+
+La présente License est consentie pour une durée indéterminée.
+
+Elle peut être résiliée à tout moment par le Concédant en cas de manquement par le Licencié à l'une des conditions d'utilisation. 
+
+En cas de résiliation, le Licencié devra immédiatement cesser toute utilisation du Logiciel et détruire toutes les copies en sa possession.
+
+6. LIMITES DE RESPONSABILITÉ
+
+6.1 Le Logiciel est fourni en l'état, sans garantie d'aucune sorte. Le Concédant ne garantit pas que le Logiciel répondra aux attentes et besoins spécifiques du Licencié.
+
+6.2 Le Concédant ne pourra en aucun cas être tenu pour responsable des éventuels dommages directs ou indirects résultant de l'utilisation du Logiciel par le Licencié, tels que pertes de données, préjudice financier, commercial, moral...
+
+6.3 Le Licencié utilise le Logiciel sous son entière responsabilité et à ses risques et périls.
+
+7. LOI APPLICABLE ET JURIDICTION
+
+La présente License est régie par la loi française. Tout litige relatif à l'exécution ou à l'interprétation de la License sera de la compétence exclusive des tribunaux français.
+
+Fait à Valenciennes, le 12 février 2024.
+
+M. Augustin MICHEZ
