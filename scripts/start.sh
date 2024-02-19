@@ -15,7 +15,7 @@ LOG_DIR="./logs"
 VERSION_FILE="./version.txt"
 
 # Every how many seconds it should check for a new release
-CHECK_TIME=10
+CHECK_TIME=30
 
 function install_new_version() {
     echo -n "A new version is available. Do you want to install it? (y/n): "
