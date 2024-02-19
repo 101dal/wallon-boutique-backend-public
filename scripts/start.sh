@@ -47,10 +47,6 @@ function cleanup() {
     exit 0
 }
 
-function prompt_user() {
-    xterm -e "bash -c 'install_new_version; bash'"  # Open a new terminal for user input
-}
-
 # Trap the exit signal to perform cleanup
 trap cleanup EXIT
 
@@ -88,25 +84,11 @@ while true; do
         # Stop server
         kill $(pgrep -f bun)
 
-        # Check if backup already exists 
-        if [ ! -f "$BACKUP_DIR/$LATEST_VERSION.zip" ]; then
-            echo "$(date +"%Y-%m-%d %H:%M:%S") Backing up current version" >> $LOG_FILE
-            # Backup current version
-            (cd $ASSETS_DIR && zip -r $BACKUP_DIR/$LATEST_VERSION.zip .) 
-        fi
-
-        # Prompt user in a new terminal window
-        prompt_user
-
         # Download latest release 
         curl -L -o "/tmp/$LATEST_VERSION.zip" https://github.com/$REPO/releases/download/$LATEST_VERSION/release.zip
 
         # Extract release
         unzip -o "/tmp/$LATEST_VERSION.zip" -d $ASSETS_DIR
-
-        # Preserve .env and assets
-        cp $ASSETS_DIR/backup/.env $ASSETS_DIR/
-        cp -r $ASSETS_DIR/backup/assets $ASSETS_DIR/
 
         # Update version file
         echo "$LATEST_VERSION" > "$VERSION_FILE"
