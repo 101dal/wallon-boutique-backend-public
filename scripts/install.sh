@@ -13,6 +13,7 @@ ASSETS_DIR="./server"
 BACKUP_DIR="./backups"
 LOG_DIR="./logs"
 ENV_FILE="$ASSETS_DIR/.env"
+VERSION_FILE="./version.txt"
 
 # Make directories
 mkdir -p $ASSETS_DIR
@@ -37,6 +38,11 @@ cp $ASSETS_DIR/.env $ASSETS_DIR/backup/.env
 # Install dependencies
 (cd $ASSETS_DIR && bun install)
 
+# Set the version into the file
+cat > $VERSION_FILE <<EOF
+$TAG
+EOF
+
 # Create .env file
 cat > $ENV_FILE <<EOF
 # Database configuration for POSTGRESQL
@@ -44,11 +50,11 @@ DB_USER=
 DB_PASSWORD=
 DB_NAME=
 DB_HOST=
-DB_PORT=
+DB_PORT=5432
 
 # Server configuration
 PORT=3000
-ASSETS_FOLDER=${PWD}/assets
+ASSETS_FOLDER=\${PWD}/assets
 
 # JWT configuration
 SECRET=# Server side secret DO NOT SHARE FOR MORE SECURITY
