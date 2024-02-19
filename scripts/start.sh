@@ -19,6 +19,15 @@ function install_new_version() {
     fi
 }
 
+# Create new log file
+LOG_FILE="$LOG_DIR/server_$START_TIME.log"
+
+touch "$LOG_FILE"
+
+# Stop server
+kill $(pgrep -f bun)
+
+(cd $ASSETS_DIR && bun run "server.js" | ccze -m ansi | tee -a "../$LOG_FILE" 2>&1 &)
 while true; do
 
     # Restart timer
