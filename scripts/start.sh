@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if ! command -v bun &> /dev/null; then
+    echo "Error: 'bun' is not installed. Please install it from bun.sh before running this script."
+    exit 1
+fi
+
 # Config 
 REPO="101dal/wallon-boutique-backend-public"
 ASSETS_DIR="./server" 
@@ -27,7 +32,8 @@ touch "$LOG_FILE"
 # Stop server
 kill $(pgrep -f bun)
 
-(cd $ASSETS_DIR && bun run "server.js" | ccze -m ansi | tee -a "../$LOG_FILE" 2>&1 &)
+(cd $ASSETS_DIR && bun run "server.js" | tee -a "../$LOG_FILE" 2>&1 &)
+
 while true; do
 
     # Restart timer
@@ -69,7 +75,7 @@ while true; do
 
         if install_new_version; then
             # Start server
-            (cd $ASSETS_DIR && bun run "server.js" | ccze -m ansi | tee -a "../$LOG_FILE" 2>&1 &)
+            (cd $ASSETS_DIR && bun run "server.js" | tee -a "../$LOG_FILE" 2>&1 &)
         else
             echo "Installation of the new version skipped."
         fi
