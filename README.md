@@ -3,6 +3,8 @@
 Bienvenue dans le dossier du backend du site de commerce en ligne du Lycée Henri Wallon. Cette section regroupe les fichiers essentiels nécessaires au bon fonctionnement du serveur.
 
 ## INSTALLATION:
+- TOUTES LES COMMANDES SONT A EXECUTER SOUT L'UTILISATEUR ROOT POUR QUE LA COMMANDE `kill` PUISSE FONCTIONNER CORRECTEMENT
+
 - Exécuter la commande `./install.sh` sur Linux pour commencer l'installation.
 
 - Ensuite exécuter la commande `./start.sh` sur Linux pour allumer le serveur. Les logs du servers seront dans le dossier Logs. Tous les jours, il regardera si une nouvelle version est disponible. Si c'est le cas, il l'installe.
