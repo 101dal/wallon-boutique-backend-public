@@ -47,6 +47,10 @@ function cleanup() {
     exit 0
 }
 
+function prompt_user() {
+    xterm -e "bash -c 'install_new_version; bash'"  # Open a new terminal for user input
+}
+
 # Trap the exit signal to perform cleanup
 trap cleanup EXIT
 
@@ -65,13 +69,16 @@ while true; do
     # Check for new release every $CHECK_TIME seconds
     sleep $CHECK_TIME
 
-    echo "Checking for a new version..."
+    echo "$(date +"%Y-%m-%d %H:%M:%S") Checking for a new version..." >> $LOG_FILE
 
     # Get installed and latest versions
     INSTALLED_VERSION=$(get_installed_version)
     LATEST_VERSION=$(get_latest_release)
 
     if [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; then
+
+        # Prompt the user to know if we should download the new version
+        install_new_version || continue
 
         # Create new log file
         START_TIME=$(date +%Y%m%d%H%M%S)
@@ -88,6 +95,9 @@ while true; do
             (cd $ASSETS_DIR && zip -r $BACKUP_DIR/$LATEST_VERSION.zip .) 
         fi
 
+        # Prompt user in a new terminal window
+        prompt_user
+
         # Download latest release 
         curl -L -o "/tmp/$LATEST_VERSION.zip" https://github.com/$REPO/releases/download/$LATEST_VERSION/release.zip
 
@@ -103,6 +113,6 @@ while true; do
 
         (cd $ASSETS_DIR && bun run "server.js" | tee -a "../$LOG_FILE" 2>&1 &)
     else
-        echo "No new version found."
+        echo "$(date +"%Y-%m-%d %H:%M:%S") No new version found." >> $LOG_FILE
     fi
 done
