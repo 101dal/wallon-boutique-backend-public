@@ -25,6 +25,7 @@ function install_new_version() {
 }
 
 # Create new log file
+START_TIME=$(date +%Y%m%d%H%M%S)
 LOG_FILE="$LOG_DIR/server_$START_TIME.log"
 
 touch "$LOG_FILE"
