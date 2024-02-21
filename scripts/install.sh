@@ -70,3 +70,4 @@ RATE_MAX=1000 # The max amount of requests for a given ip in the duration timesp
 EOF
 
 echo "Installation complete!"
+

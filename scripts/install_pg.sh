@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "Installing postgresql database..."
+
+echo "If you encounter an error, fix it and restart this script with ./install_pg.sh"
+
 # Check if script is run as root
 if [ "$EUID" -ne 0 ]; then
   echo "Please run as root or using sudo."
@@ -8,6 +12,12 @@ fi
 
 # Update package list
 apt update
+
+# Check if the systemctl command exists
+if ! command -v systemctl &> /dev/null; then
+    echo "Error: 'systemctl' is not installed. Please install it using 'apt install systemd'"
+    exit 1
+fi
 
 # Install PostgreSQL
 apt install -y postgresql postgresql-contrib
@@ -45,3 +55,5 @@ echo "Password: $pg_password"
 echo "Database: $pg_database"
 echo "Port: $pg_port"
 echo "Database URL: postgresql://$pg_username:$pg_password@localhost:$pg_port/$pg_database"
+
+echo "Now you have to enter all the needed information into the .env file and you are free to use the server"

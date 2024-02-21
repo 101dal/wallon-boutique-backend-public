@@ -7,13 +7,13 @@ Bienvenue dans le dossier du backend du site de commerce en ligne du Lycée Henr
 
 - Exécuter la commande `./install.sh` sur Linux pour commencer l'installation.
 
-- Ensuite exécuter la commande `./start.sh` sur Linux pour allumer le serveur. Les logs du servers seront dans le dossier Logs. Tous les jours, il regardera si une nouvelle version est disponible. Si c'est le cas, il l'installe.
+- MODIFIER LE CONTENU DU FICHIER `./server/.env` EN Y METTANT TOUTES LES INFORMATIONS NECESSAIRES.
+
+- Ensuite exécuter la commande `./start.sh` sur Linux pour allumer le serveur.
 
 ## Contenu du Dossier `src`:
 
 1. **`server.js`**: Fichier exécutable conçu pour Bun. Pour le lancer, veuillez utiliser la commande `bun run server.js` sur Bun.
-
-2. **`server.js`**: Fichier exécutable conçu pour Linux. Pour le lancer, veuillez utiliser la commande `./server` sur Linux. NE PAS UTILISER SI `server.js` FONCTIONNE.
 
 3. **`.env`**: Fichier contenant toutes les variables secrètes et la configuration du serveur. Assurez-vous de ne pas partager ces informations sensibles.
 
@@ -40,13 +40,13 @@ Le serveur gère diverses fonctionnalités pour le site de commerce en ligne du 
 - Gestion des utilisateurs
 - Gestion des paniers
 - Gestion des commandes
+- Gestion des avis
 
 ## Prérequis:
 
 - Ce serveur peut être exécuté sur Windows avec le sous-système Windows pour Linux (WSL) avec Bun installé : [Bun](https://bun.sh/).
-- Une configuration du serveur PostgreSQL est nécessaire dans le fichier `.env`. Les champs à remplir sont les premiers, et un exemple pré-configuré est déjà présent.
-- Il faut bien évidemment lancer le programme depuis le dossier src. Vous avez aussi la possibilité d'exécuter la commande : `bun main`.
 
+- Une configuration du serveur PostgreSQL est nécessaire dans le fichier `.env`. Les champs à remplir sont les premiers, et un exemple pré-configuré est déjà présent.
 ## Conseils:
 - Pour avoir Linux sur son ordinateur Windows, vous pouvez soit installer une machine virtuelle soit configurer WSL. Dans les dernières versions de Windows 10 et 11, il suffit d'entrer la commande `wsl install` dans le cmd.
 
