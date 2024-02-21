@@ -15,8 +15,8 @@ apt update
 
 # Check if the systemctl command exists
 if ! command -v systemctl &> /dev/null; then
-    echo "Error: 'systemctl' is not installed. Please install it using 'apt install systemd'"
-    exit 1
+    echo "Error: 'systemctl' is not installed."
+    apt install systemd
 fi
 
 # Install PostgreSQL
