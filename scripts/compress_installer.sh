@@ -3,7 +3,7 @@
 # Define directories and files
 SOURCE_DIR="/mnt/c/Users/augus/Desktop/server/wallon-boutique-backend-public/scripts"
 OUTPUT_DIR="/mnt/c/Users/augus/Desktop/server/wallon-boutique-backend-public"
-INCLUDE_FILES=("install.sh" "start.sh" "install_pg.sh" "total_install.sh" "../IMPORTANT.txt" "../LICENSE.txt" "../README.md" "../README.pdf")
+INCLUDE_FILES=("install.sh" "start.sh" "install_pg.sh" "total_install.sh" "../IMPORTANT.txt" "../LICENSE.md" "../README.md")
 ZIP_FILE="INSTALLER.zip"
 
 # Check if the source directory exists
