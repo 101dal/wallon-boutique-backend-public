@@ -49,11 +49,16 @@ sudo -u postgres createdb $pg_database
 sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE \"$pg_database\" TO \"$pg_username\";"
 
 # Display configuration details
+echo
+echo
 echo "PostgreSQL server setup complete."
 echo "Username: $pg_username"
 echo "Password: $pg_password"
 echo "Database: $pg_database"
 echo "Port: $pg_port"
 echo "Database URL: postgresql://$pg_username:$pg_password@localhost:$pg_port/$pg_database"
+
+echo
+echo
 
 echo "Now you have to enter all the needed information into the .env file and you are free to use the server"

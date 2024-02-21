@@ -3,7 +3,9 @@
 Bienvenue dans le dossier du backend du site de commerce en ligne du Lycée Henri Wallon. Cette section regroupe les fichiers essentiels nécessaires au bon fonctionnement du serveur.
 
 ## INSTALLATION:
-- TOUTES LES COMMANDES SONT A EXECUTER SOUT L'UTILISATEUR ROOT POUR QUE LA COMMANDE `kill` PUISSE FONCTIONNER CORRECTEMENT
+- TOUTES LES COMMANDES SONT A EXECUTER SOUT L'UTILISATEUR ROOT
+
+- Si vous voulez avoir une installation fluide, exécuter la commande "./total_install.sh" (sur root). Sinon, suivez l'étape suivante pour une installation étape par étape.
 
 - Exécuter la commande `./install.sh` sur Linux pour commencer l'installation.
 

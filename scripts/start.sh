@@ -12,7 +12,7 @@ REPO="101dal/wallon-boutique-backend-public"
 ASSETS_DIR="./server" 
 BACKUP_DIR="./backups"
 LOG_DIR="./logs"
-VERSION_FILE="./version.txt"
+VERSION_FILE="./version"
 
 # Every how many seconds it should check for a new release
 CHECK_TIME=30
@@ -51,12 +51,41 @@ function cleanup() {
 trap cleanup EXIT
 
 # Create new log file
-START_TIME=$(date +%Y%m%d%H%M%S)
+START_TIME=$(date +%Y-%m-%d--%H-%M-%S)
 LOG_FILE="$LOG_DIR/server_$START_TIME.log"
 touch "$LOG_FILE"
 
 # Stop server
 kill $(pgrep -f bun)
+
+# Check for new release on startup
+echo "$(date +"%d/%m/%Y à %H:%M:%S") Checking for a new version on startup..." >> $LOG_FILE
+echo "$(date +"%d/%m/%Y à %H:%M:%S") Checking for a new version on startup..."
+
+INSTALLED_VERSION=$(get_installed_version)
+LATEST_VERSION=$(get_latest_release)
+if [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; then
+    install_new_version || {
+        (cd $ASSETS_DIR && bun run "server.js" | tee -a "../$LOG_FILE" 2>&1 &)
+        continue
+    }
+    # Create new log file
+    START_TIME=$(date +%Y%m%d%H%M%S)
+    LOG_FILE="$LOG_DIR/server_$START_TIME.log"
+    touch "$LOG_FILE"
+
+    # Stop server
+    kill $(pgrep -f bun)
+
+    # Download latest release
+    curl -L -o "/tmp/$LATEST_VERSION.zip" https://github.com/$REPO/releases/download/$LATEST_VERSION/release.zip
+
+    # Extract release
+    unzip -o "/tmp/$LATEST_VERSION.zip" -d $ASSETS_DIR
+
+    # Update version file
+    echo "$LATEST_VERSION" > "$VERSION_FILE"
+fi
 
 (cd $ASSETS_DIR && bun run "server.js" | tee -a "../$LOG_FILE" 2>&1 &)
 
@@ -65,7 +94,8 @@ while true; do
     # Check for new release every $CHECK_TIME seconds
     sleep $CHECK_TIME
 
-    echo "$(date +"%Y-%m-%d %H:%M:%S") Checking for a new version..." >> $LOG_FILE
+    echo "$(date +"%d/%m/%Y à %H:%M:%S") Checking for a new version on startup..." >> $LOG_FILE
+    echo "$(date +"%d/%m/%Y à %H:%M:%S") Checking for a new version on startup..."
 
     # Get installed and latest versions
     INSTALLED_VERSION=$(get_installed_version)

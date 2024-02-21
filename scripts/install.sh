@@ -13,7 +13,7 @@ ASSETS_DIR="./server"
 BACKUP_DIR="./backups"
 LOG_DIR="./logs"
 ENV_FILE="$ASSETS_DIR/.env"
-VERSION_FILE="./version.txt"
+VERSION_FILE="./version"
 
 # Make directories
 mkdir -p $ASSETS_DIR
@@ -69,5 +69,10 @@ RATE_DURATION=60000 # The time between two resets of the rate (in ms)
 RATE_MAX=1000 # The max amount of requests for a given ip in the duration timespan (an integer)
 EOF
 
+echo
+echo
+echo
 echo "Installation complete!"
-
+echo
+echo
+echo
