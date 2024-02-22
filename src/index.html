@@ -411,17 +411,20 @@
             // Append query parameters to the URL
             const urlQuery = new URLSearchParams(query);
             const queryLength = Object.keys(query).length;
-            let url = `http://localhost:3000${route}`;
+            let url = `https://302dffd6-e2c6-4427-ab6a-3ee2750fe269-00-31f3r0ok0b021.picard.replit.dev${route}`;
             if (queryLength > 0) {
                 url += '?' + urlQuery;
             }
 
+			console.log(params);
+
             // Handle params array if specified
-            if (paramsArr) {
-                paramsArr.forEach(param => {
-                    url = url.replace(`:${param}`, params[param]);
-                });
-            }
+			for(const param in params) {
+				console.log(param);
+				url = url.replace(`:${param}`, params[param]);
+			};
+
+			console.log(url);
 
             // Send the API request with the FormData object
             const response = await fetch(url, {
@@ -472,12 +475,10 @@
                 query[value] = document.querySelector(`#${endpoint.id} #` + value).value;
             });
 
-            let paramValue = undefined;
-            let params = undefined;
-            if (endpoint.params) {
-                paramValue = document.querySelector(`#${endpoint.id} #` + endpoint.params).value || undefined;
-                params = { name: endpoint.params, value: paramValue };
-            }
+            let params = {};
+			endpoint.params.forEach(value => {
+				params[value] = document.querySelector(`#${endpoint.id} #` + value).value;
+			});
 
             const response = await handleAPIRequest(endpoint.url, endpoint.method, body, params, query, endpoint);
 
