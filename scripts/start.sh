@@ -11,7 +11,6 @@ fi
 REPO="101dal/wallon-boutique-backend-public"
 ASSETS_DIR="./server" 
 BACKUP_DIR="./backups"
-LOG_DIR="./logs"
 VERSION_FILE="./version"
 
 # Every how many seconds it should check for a new release
@@ -50,29 +49,19 @@ function cleanup() {
 # Trap the exit signal to perform cleanup
 trap cleanup EXIT
 
-# Create new log file
-START_TIME=$(date +%Y-%m-%d--%H-%M-%S)
-LOG_FILE="$LOG_DIR/server_$START_TIME.log"
-touch "$LOG_FILE"
-
 # Stop server
 kill $(pgrep -f bun)
 
 # Check for new release on startup
-echo "$(date +"%d/%m/%Y à %H:%M:%S") Checking for a new version on startup..." >> $LOG_FILE
 echo "$(date +"%d/%m/%Y à %H:%M:%S") Checking for a new version on startup..."
 
 INSTALLED_VERSION=$(get_installed_version)
 LATEST_VERSION=$(get_latest_release)
 if [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; then
     install_new_version || {
-        (cd $ASSETS_DIR && bun run "server.js" | tee -a "../$LOG_FILE" 2>&1 &)
+        (cd $ASSETS_DIR && bun run "server.js")
         continue
     }
-    # Create new log file
-    START_TIME=$(date +%Y%m%d%H%M%S)
-    LOG_FILE="$LOG_DIR/server_$START_TIME.log"
-    touch "$LOG_FILE"
 
     # Stop server
     kill $(pgrep -f bun)
@@ -87,14 +76,13 @@ if [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; then
     echo "$LATEST_VERSION" > "$VERSION_FILE"
 fi
 
-(cd $ASSETS_DIR && bun run "server.js" | tee -a "../$LOG_FILE" 2>&1 &)
+(cd $ASSETS_DIR && bun run "server.js")
 
 while true; do
 
     # Check for new release every $CHECK_TIME seconds
     sleep $CHECK_TIME
 
-    echo "$(date +"%d/%m/%Y à %H:%M:%S") Checking for a new version on startup..." >> $LOG_FILE
     echo "$(date +"%d/%m/%Y à %H:%M:%S") Checking for a new version on startup..."
 
     # Get installed and latest versions
@@ -105,11 +93,6 @@ while true; do
 
         # Prompt the user to know if we should download the new version
         install_new_version || continue
-
-        # Create new log file
-        START_TIME=$(date +%Y%m%d%H%M%S)
-        LOG_FILE="$LOG_DIR/server_$START_TIME.log"
-        touch "$LOG_FILE"
       
         # Stop server
         kill $(pgrep -f bun)
@@ -123,8 +106,8 @@ while true; do
         # Update version file
         echo "$LATEST_VERSION" > "$VERSION_FILE"
 
-        (cd $ASSETS_DIR && bun run "server.js" | tee -a "../$LOG_FILE" 2>&1 &)
+        (cd $ASSETS_DIR && bun run "server.js")
     else
-        echo "$(date +"%Y-%m-%d %H:%M:%S") No new version found." >> $LOG_FILE
+        echo "$(date +"%Y-%m-%d %H:%M:%S") No new version found."
     fi
 done
