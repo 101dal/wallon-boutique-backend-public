@@ -55,6 +55,7 @@ DB_PORT=5432
 # Server configuration
 PORT=3000
 ASSETS_FOLDER=\${PWD}/assets
+LOGGING_FOLDER=\${PWD}/../logs
 
 # JWT configuration
 SECRET=# Server side secret DO NOT SHARE FOR MORE SECURITY
