@@ -14,7 +14,7 @@ BACKUP_DIR="./backups"
 VERSION_FILE="./version"
 
 # Every how many seconds it should check for a new release
-CHECK_TIME=30
+CHECK_TIME=86400
 
 function install_new_version() {
     echo -n "A new version is available. Do you want to install it? (y/n): "
@@ -76,9 +76,9 @@ if [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; then
     echo "$LATEST_VERSION" > "$VERSION_FILE"
 fi
 
-(cd $ASSETS_DIR && bun run "server.js")
-
 while true; do
+    (cd $ASSETS_DIR && bun run "server.js")
+
 
     # Check for new release every $CHECK_TIME seconds
     sleep $CHECK_TIME
@@ -89,13 +89,14 @@ while true; do
     INSTALLED_VERSION=$(get_installed_version)
     LATEST_VERSION=$(get_latest_release)
 
+    
+    # Stop server
+    kill $(pgrep -f bun)
+
     if [ "$INSTALLED_VERSION" != "$LATEST_VERSION" ]; then
 
         # Prompt the user to know if we should download the new version
         install_new_version || continue
-      
-        # Stop server
-        kill $(pgrep -f bun)
 
         # Download latest release 
         curl -L -o "/tmp/$LATEST_VERSION.zip" https://github.com/$REPO/releases/download/$LATEST_VERSION/release.zip
@@ -106,7 +107,6 @@ while true; do
         # Update version file
         echo "$LATEST_VERSION" > "$VERSION_FILE"
 
-        (cd $ASSETS_DIR && bun run "server.js")
     else
         echo "$(date +"%Y-%m-%d %H:%M:%S") No new version found."
     fi
