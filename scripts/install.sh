@@ -74,10 +74,10 @@ fi
 
 # Download the latest INSTALLER.zip
 INSTALLER_TAG="INSTALLER-$TAG"
-curl -L -o "$BACKUP_DIR/$INSTALLER_TAG.zip" "$RELEASE_URL/download/$INSTALLER_TAG/INSTALLER.zip"
+curl -L -o "$BACKUP_DIR/$INSTALLER_TAG.zip" "$RELEASE_URL/download/$TAG/INSTALLER.zip"
 
 # Extract INSTALLER.zip
-unzip -o "$BACKUP_DIR/$INSTALLER_TAG.zip" -d "$SERVER_DIR"
+unzip -o "$BACKUP_DIR/$INSTALLER_TAG.zip" -d .
 
 echo -e "\nInstallation complete!\n"
 
