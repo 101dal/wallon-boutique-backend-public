@@ -1,30 +1,66 @@
 #!/bin/bash
 
-echo "Please follow the instructions very carefully."
+bash ./install.sh
 
-# Check if the script is running as root
-if [ "$(id -u)" -ne 0 ]; then
-    echo "This script must be run as root. Please switch to root ('sudo su') before running it." >&2
-    exit 1
+echo "Installing postgresql database..."
+
+echo "If you encounter an error, fix it and restart this script with ./install_pg.sh"
+
+# Check if script is run as root for install_pg.sh
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root or using sudo."
+  exit
 fi
 
-bash ./install.sh
-bash ./install_pg.sh
+# Update package list for install_pg.sh
+apt update
 
-# Loop until the user confirms they have modified the .env parameters
-while true; do
-    echo "Have you modified the .env parameters according to your environment? (yes/no)"
-    read -r response
+# Check if the systemctl command exists for install_pg.sh
+if ! command -v systemctl &> /dev/null; then
+    echo "Error: 'systemctl' is not installed."
+    apt install systemd
+fi
 
-    # Convert the response to lowercase
-    response=$(echo "$response" | tr '[:upper:]' '[:lower:]')
+# Install PostgreSQL for install_pg.sh
+apt install -y postgresql postgresql-contrib
 
-    # Check the response
-    if [ "$response" == "yes" ]; then
-        echo "Starting the application..."
-        bash ./start.sh
-        break  # Exit the loop if the answer is yes
-    else
-        echo "Please modify the .env parameters to proceed."
-    fi
-done
+# Start PostgreSQL service for install_pg.sh
+systemctl start postgresql
+
+# Check if PostgreSQL service started successfully for install_pg.sh
+if [ $? -ne 0 ]; then
+  echo "Error: PostgreSQL service failed to start."
+  exit 1
+fi
+
+# Enable PostgreSQL service to start on boot for install_pg.sh
+systemctl enable postgresql
+
+# Prompt for PostgreSQL configuration for install_pg.sh
+read -p "Enter PostgreSQL username: " pg_username
+read -p "Enter PostgreSQL password: " pg_password
+read -p "Enter a name for the new database: " pg_database
+read -p "Enter PostgreSQL port (press Enter for default 5432): " pg_port
+
+# Use default port if not provided for install_pg.sh
+pg_port=${pg_port:-5432}
+
+# Create a new PostgreSQL user and database for install_pg.sh
+sudo -u postgres psql -c "CREATE USER \"$pg_username\" WITH PASSWORD '$pg_password';"
+sudo -u postgres createdb $pg_database
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE \"$pg_database\" TO \"$pg_username\";"
+
+# Display configuration details for install_pg.sh
+echo
+echo
+echo "PostgreSQL server setup complete."
+echo "Username: $pg_username"
+echo "Password: $pg_password"
+echo "Database: $pg_database"
+echo "Port: $pg_port"
+echo "Database URL: postgresql://$pg_username:$pg_password@localhost:$pg_port"
+
+echo
+echo
+
+echo "Now you have to enter all the needed information into the .env file and you are free to use the server"

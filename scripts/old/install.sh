@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if bun command is available
-if ! command -v bun &>/dev/null; then
+if ! command -v bun &> /dev/null; then
     echo "Error: 'bun' is not installed. Please install it from bun.sh before running this script."
     exit 1
 fi
@@ -9,43 +9,42 @@ fi
 # Config
 REPO="101dal/wallon-boutique-backend-public"
 RELEASE_URL="https://github.com/$REPO/releases"
-SERVER_DIR="./server"
+ASSETS_DIR="./server"
 BACKUP_DIR="./backups"
-ENV_FILE="$SERVER_DIR/.env"
+LOG_DIR="./logs"
+ENV_FILE="$ASSETS_DIR/.env"
 VERSION_FILE="./version"
 
 # Make directories
-if [ ! -d "$SERVER_DIR" ]; then
-    mkdir -p "$SERVER_DIR"
-fi
-if [ ! -d "$BACKUP_DIR" ]; then
-    mkdir -p "$BACKUP_DIR"
-fi
+mkdir -p $ASSETS_DIR
+mkdir -p $BACKUP_DIR
+mkdir -p $LOG_DIR
 
 # Get latest release tag
-TAG=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | grep -oP '"tag_name": "\K(.*)(?=")')
+TAG=$(curl -s https://api.github.com/repos/$REPO/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
 
-echo "Installing the last stable version: $TAG"
+echo "Installing the last stable version : $TAG"
 
 # Download release
-curl -L -o "$BACKUP_DIR/$TAG.zip" "$RELEASE_URL/download/$TAG/release.zip"
+curl -L -o "$BACKUP_DIR/$TAG.zip" $RELEASE_URL/download/$TAG/release.zip
 
 # Extract release
-unzip -o "$BACKUP_DIR/$TAG.zip" -d "$SERVER_DIR"
+unzip -o "$BACKUP_DIR/$TAG.zip" -d $ASSETS_DIR 
 
 # Initialize backup
-cp -r "$SERVER_DIR/assets" "$SERVER_DIR/backup"
-cp "$SERVER_DIR/.env" "$SERVER_DIR/backup/.env"
+cp -r $ASSETS_DIR/assets $ASSETS_DIR/backup
+cp $ASSETS_DIR/.env $ASSETS_DIR/backup/.env
 
 # Install dependencies
-(cd "$SERVER_DIR" && bun install)
+(cd $ASSETS_DIR && bun install)
 
 # Set the version into the file
-echo "$TAG" > "$VERSION_FILE"
+cat > $VERSION_FILE <<EOF
+$TAG
+EOF
 
 # Create .env file
-if [ ! -f "$ENV_FILE" ]; then
-    cat >"$ENV_FILE" <<EOF
+cat > $ENV_FILE <<EOF
 # Database configuration for POSTGRESQL
 DB_USER=
 DB_PASSWORD=
@@ -70,17 +69,11 @@ TOKEN_EXPIRE_D=7
 RATE_DURATION=60000 # The time between two resets of the rate (in ms)
 RATE_MAX=1000 # The max amount of requests for a given ip in the duration timespan (an integer)
 EOF
-fi
 
-# Download the latest INSTALLER.zip
-INSTALLER_TAG="INSTALLER-$TAG"
-curl -L -o "$BACKUP_DIR/$INSTALLER_TAG.zip" "$RELEASE_URL/download/$INSTALLER_TAG/INSTALLER.zip"
-
-# Extract INSTALLER.zip
-unzip -o "$BACKUP_DIR/$INSTALLER_TAG.zip" -d "$SERVER_DIR"
-
-echo -e "\nInstallation complete!\n"
-
-if [ "$1" ]; then
-    bash ./start.sh
-fi
+echo
+echo
+echo
+echo "Installation complete!"
+echo
+echo
+echo
