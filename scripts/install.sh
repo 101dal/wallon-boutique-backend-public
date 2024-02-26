@@ -80,12 +80,8 @@ while [[ $# -gt 0 ]]; do
 done
 
 # Make directories
-if [ ! -d "$SERVER_DIR" ]; then
-    mkdir -p "$SERVER_DIR"
-fi
-if [ ! -d "$BACKUP_DIR" ]; then
-    mkdir -p "$BACKUP_DIR"
-fi
+mkdir -p "$SERVER_DIR"
+mkdir -p "$BACKUP_DIR"
 
 # Get latest release tag
 TAG=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | grep -oP '"tag_name": "\K(.*)(?=")')
@@ -93,10 +89,10 @@ TAG=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | grep -oP '"
 echo "Installing the last stable version: $TAG"
 
 # Download release
-curl -L -o "$BACKUP_DIR/$TAG.zip" "$RELEASE_URL/download/$TAG/release.zip"
+curl -L -o "$BACKUP_DIR/$TAG.tar.gz" "$RELEASE_URL/download/$TAG/release.tar.gz"
 
 # Extract release
-unzip -o "$BACKUP_DIR/$TAG.zip" -d "$SERVER_DIR"
+tar -xzvf "$BACKUP_DIR/$TAG.tar.gz" -C "$SERVER_DIR" --strip-components=1
 
 # Initialize backup
 cp -r "$SERVER_DIR/assets" "$SERVER_DIR/backup"
@@ -140,13 +136,12 @@ EOF
   update_env_file
 fi
 
-# Download the latest INSTALLER.zip
+# Download the latest INSTALLER.tar.gz
 INSTALLER_TAG="INSTALLER-$TAG"
-curl -L -o "$BACKUP_DIR/$INSTALLER_TAG.zip" "$RELEASE_URL/download/$TAG/INSTALLER.zip"
+curl -L -o "$BACKUP_DIR/$INSTALLER_TAG.tar.gz" "$RELEASE_URL/download/$TAG/INSTALLER.tar.gz"
 
-# Extract INSTALLER.zip
-unzip -o "$BACKUP_DIR/$INSTALLER_TAG.zip" -d "$MAIN_DIR"
-
+# Extract INSTALLER.tar.gz
+tar -xzvf "$BACKUP_DIR/$INSTALLER_TAG.tar.gz" -C "$MAIN_DIR"
 
 # Add debugging statements
 ls -la "$MAIN_DIR"

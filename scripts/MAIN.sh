@@ -27,29 +27,27 @@ echo "Checking all the modules..."
 
 apt update
 
-# Check if curl is installed
-if ! command -v curl &>/dev/null; then
-    echo "Error: 'curl' is not installed. Installing curl..."
-    apt install curl
+# Function to check and install a command if it's not available
+check_and_install_command() {
+    local command_name=$1
+    if ! command -v "$command_name" &>/dev/null; then
+        echo "Error: '$command_name' is not installed. Installing $command_name..."
+        apt install "$command_name"
+    fi
+}
+
+# Check and install required commands
+# Check if tar is installed
+if ! command -v tar &> /dev/null; then
+    # Install tar
+    sudo apt-get update
+    sudo apt-get install tar
 fi
 
-# Check if unzip is installed
-if ! command -v unzip &>/dev/null; then
-    echo "Error: 'unzip' is not installed. Installing unzip..."
-    apt install unzip
-fi
-
-# Check if bun is installed
-if ! command -v bun &>/dev/null; then
-    echo "Error: 'bun' is not installed. Installing bun..."
-    curl -fsSL https://bun.sh/install | bash
-fi
-
-# Check if systemctl is installed
-if ! command -v systemctl &>/dev/null; then
-    echo "Error: 'systemctl' is not installed. Installing systemctl"
-    apt install systemd
-fi
+check_and_install_command "curl"
+check_and_install_command "unzip"
+check_and_install_command "bun"
+check_and_install_command "systemctl"
 
 # Check if PostgreSQL is installed
 if ! command -v psql &>/dev/null; then
