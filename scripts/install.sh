@@ -1,5 +1,35 @@
 #!/bin/bash
 
+# Function to update .env file with provided values
+update_env_file() {
+  if [ -n "$DB_USER" ]; then
+    sed -i "s/^DB_USER=.*/DB_USER=$DB_USER/" "$ENV_FILE"
+  fi
+
+  if [ -n "$DB_PASSWORD" ]; then
+    sed -i "s/^DB_PASSWORD=.*/DB_PASSWORD=$DB_PASSWORD/" "$ENV_FILE"
+  fi
+
+  if [ -n "$DB_NAME" ]; then
+    sed -i "s/^DB_NAME=.*/DB_NAME=$DB_NAME/" "$ENV_FILE"
+  fi
+
+  if [ -n "$DB_HOST" ]; then
+    sed -i "s/^DB_HOST=.*/DB_HOST=$DB_HOST/" "$ENV_FILE"
+  fi
+
+  if [ -n "$SECRET" ]; then
+    sed -i "s/^SECRET=.*/SECRET=$SECRET/" "$ENV_FILE"
+  fi
+}
+
+# Function to start the script
+start_script() {
+  if [ -n "$START_LINE" ]; then
+    bash ./start.sh
+  fi
+}
+
 # Check if bun command is available
 if ! command -v bun &>/dev/null; then
     echo "Error: 'bun' is not installed. Please install it from bun.sh before running this script."
@@ -13,6 +43,41 @@ SERVER_DIR="./server"
 BACKUP_DIR="./backups"
 ENV_FILE="$SERVER_DIR/.env"
 VERSION_FILE="./version"
+MAIN_DIR=$(pwd)
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --db-user)
+      DB_USER="$2"
+      shift 2
+      ;;
+    --db-password)
+      DB_PASSWORD="$2"
+      shift 2
+      ;;
+    --db-name)
+      DB_NAME="$2"
+      shift 2
+      ;;
+    --db-host)
+      DB_HOST="$2"
+      shift 2
+      ;;
+    --secret)
+      SECRET="$2"
+      shift 2
+      ;;
+    --start-line)
+      START_LINE="$2"
+      shift 2
+      ;;
+    *)
+      echo "Invalid argument: $1"
+      exit 1
+      ;;
+  esac
+done
 
 # Make directories
 if [ ! -d "$SERVER_DIR" ]; then
@@ -70,6 +135,9 @@ TOKEN_EXPIRE_D=7
 RATE_DURATION=60000 # The time between two resets of the rate (in ms)
 RATE_MAX=1000 # The max amount of requests for a given ip in the duration timespan (an integer)
 EOF
+
+  # Update .env file with provided values
+  update_env_file
 fi
 
 # Download the latest INSTALLER.zip
@@ -77,10 +145,13 @@ INSTALLER_TAG="INSTALLER-$TAG"
 curl -L -o "$BACKUP_DIR/$INSTALLER_TAG.zip" "$RELEASE_URL/download/$TAG/INSTALLER.zip"
 
 # Extract INSTALLER.zip
-unzip -o "$BACKUP_DIR/$INSTALLER_TAG.zip" -d .
+unzip -o "$BACKUP_DIR/$INSTALLER_TAG.zip" -d "$MAIN_DIR"
+# Extract INSTALLER.zip
+unzip -o "$BACKUP_DIR/$INSTALLER_TAG.zip" -d "$MAIN_DIR" 'start.sh'
 
-echo -e "\nInstallation complete!\n"
 
-if [ "$1" ]; then
-    bash ./start.sh
-fi
+# Add debugging statements
+ls -la "$MAIN_DIR"
+
+# Start the script
+start_script

@@ -30,7 +30,7 @@ function check_new_version() {
         read -r answer
         if [[ "$answer" == [Yy] ]]; then
             # Start the installation of the new version and then stop the process while the install.sh script is executing
-            bash ./install.sh 1 # With $1 = 1
+            bash ./install.sh --start-line 1 
             exit 0
         else
             return 1
