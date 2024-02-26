@@ -146,8 +146,6 @@ curl -L -o "$BACKUP_DIR/$INSTALLER_TAG.zip" "$RELEASE_URL/download/$TAG/INSTALLE
 
 # Extract INSTALLER.zip
 unzip -o "$BACKUP_DIR/$INSTALLER_TAG.zip" -d "$MAIN_DIR"
-# Extract INSTALLER.zip
-unzip -o "$BACKUP_DIR/$INSTALLER_TAG.zip" -d "$MAIN_DIR" 'start.sh'
 
 
 # Add debugging statements

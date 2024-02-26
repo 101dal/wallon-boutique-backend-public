@@ -3,7 +3,7 @@
 # Define directories and files for the first script
 SOURCE_DIR_1="/mnt/c/Users/augus/Desktop/server/wallon-boutique-backend-public/scripts"
 OUTPUT_DIR_1="/mnt/c/Users/augus/Desktop/server/wallon-boutique-backend-public"
-INCLUDE_FILES_1=("install.sh" "start.sh" "total_install.sh" "../IMPORTANT.txt" "../LICENSE.md" "../README.md")
+INCLUDE_FILES_1=("install.sh" "pg_install.sh" "start.sh" "MAIN.sh" "../IMPORTANT.txt" "../LICENSE.md" "../README.md")
 ZIP_FILE_1="INSTALLER.zip"
 
 # Check if the source directory for the first script exists
