@@ -127,6 +127,18 @@ TOKEN_EXPIRE_M=0
 TOKEN_EXPIRE_H=0
 TOKEN_EXPIRE_D=7
 
+# Email sender system RESEND API
+EMAIL_KEY=
+SERVER_FULL_URL= # Example : http://localhost:3000
+EMAIL_SENDER= # Example : example@example.com
+
+# Unverified users expire
+USER_EXPIRE_MS = 0
+USER_EXPIRE_S = 0
+USER_EXPIRE_M = 10
+USER_EXPIRE_H = 0
+USER_EXPIRE_D = 0
+
 # The api configuration for the rate limits
 RATE_DURATION=60000 # The time between two resets of the rate (in ms)
 RATE_MAX=1000 # The max amount of requests for a given ip in the duration timespan (an integer)

@@ -116,6 +116,35 @@
             margin-top: 20px;
             color: #4caf50;
         }
+
+        button[type="button"] {
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button[type="button"]:hover {
+            background-color: #45a049;
+        }
+
+        textarea {
+            height: 150px;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+            font-family: monospace;
+            background-color: #f9f9f9;
+        }
+
+        textarea:read-only {
+            background-color: #f9f9f9;
+        }
     </style>
 </head>
 
@@ -134,6 +163,7 @@
     const regularEndpoints = [
         // *** Authentication ***
         { finished: true, id: "register", url: "/api/v1/auth/register", method: "POST", body: ['username', 'email', 'password', 'firstName', 'lastName', 'level', 'classe'], params: [], query: [], files: [] },
+        { finished: true, id: "verifyEmail", url: "/api/v1/auth/verify-email", method: "GET", body: [], params: [], query: ['token'], files: [] },
         { finished: true, id: "login", url: "/api/v1/auth/login", method: "POST", body: ['email', 'password'], params: [], query: [], files: [] },
         { finished: true, id: "logout", url: "/api/v1/auth/logout", method: "POST", body: ['token'], params: [], query: [], files: [] },
         { finished: true, id: "deleteAccount", url: "/api/v1/auth/delete", method: "DELETE", body: ['email', 'password'], params: [], query: [], files: [] },
@@ -187,8 +217,8 @@
 
     const adminEndpoints = [
         // *** Products ***
-        { finished: true, id: "createProduct", url: "/api/v1/products/create", method: "POST", body: ['name', 'description', 'colors', 'sizes', 'price', 'inventory', 'type'], params: [], query: [], files: ['images'], token: true },
-        { finished: true, id: "updateProduct", url: "/api/v1/products/update/:id", method: "PUT", body: ['name', 'description', 'colors', 'sizes', 'price', 'inventory', 'type'], params: ['id'], query: [], files: ['images'], token: true },
+        { finished: true, id: "createProduct", url: "/api/v1/products/create", method: "POST", body: ['name', 'description', 'colors', 'sizes', 'price', 'inventory', 'type'], params: [], query: [], files: [{ name: "images", type: "multiple" }], token: true },
+        { finished: true, id: "updateProduct", url: "/api/v1/products/update/:id", method: "PUT", body: ['name', 'description', 'colors', 'sizes', 'price', 'inventory', 'type'], params: ['id'], query: [], files: [{ name: "images", type: "multiple" }], token: true },
         { finished: true, id: "updateProductInventory", url: "/api/v1/products/inventory/:id", method: "PUT", body: ['inventory'], params: ['id'], query: [], files: [], token: true },
         { finished: true, id: "deleteProduct", url: "/api/v1/products/delete/:id", method: "DELETE", body: [], params: ['id'], query: [], files: [], token: true },
 
@@ -237,7 +267,7 @@
         { finished: true, id: "revokeToken", url: "/api/v1/tokens/revoke/:id", method: "DELETE", body: [], params: ['id'], query: [], files: [], token: true, },
     ];
 
-    
+
     // Retrieve saved form values from localStorage if available
     const savedToken = localStorage.getItem('token-all');
     if (savedToken) {
@@ -250,15 +280,13 @@
     });
 
     function generateForm(endpoint) {
-        const container = document.createElement('div');
+        const container = document.createElement("div");
         container.setAttribute("class", "form-container");
         container.classList.add((endpoint.finished) ? "finished" : "unfinished");
         const formTitle = document.createElement("h2");
         formTitle.textContent = endpoint.id.charAt(0).toUpperCase() + endpoint.id.slice(1) + ":";
         const formElement = document.createElement("form");
         formElement.id = endpoint.id;
-
-
 
         endpoint.body.forEach(field => {
             const label = document.createElement("label");
@@ -288,21 +316,24 @@
             formElement.append(document.createElement("br"));
         });
 
-        endpoint.files.forEach(fileField => {
+        endpoint.files.forEach(fileObject => {
             const fileLabel = document.createElement("label");
-            fileLabel.setAttribute("for", fileField);
-            fileLabel.textContent = fileField.charAt(0).toUpperCase() + fileField.slice(1) + " (file):";
+            fileLabel.setAttribute("for", fileObject.name);
+            fileLabel.textContent = fileObject.name.charAt(0).toUpperCase() + fileObject.name.slice(1) + " (file):";
 
             const fileInput = document.createElement("input");
             fileInput.setAttribute("type", "file");
-            fileInput.setAttribute("accept", "image/*"); // Set accepted file types if needed
-            fileInput.setAttribute("multiple", "multiple");
-            fileInput.id = fileField;
+            fileInput.setAttribute("accept", "image/*");
+            if (fileObject.type === 'multiple') {
+                fileInput.setAttribute("multiple", "multiple");
+            }
+            fileInput.id = fileObject.name;
 
             formElement.append(fileLabel);
             formElement.append(fileInput);
             formElement.append(document.createElement("br"));
         });
+
 
         endpoint.params.forEach(param => {
             const label = document.createElement("label");
@@ -329,12 +360,154 @@
         responseElementChild.setAttribute("class", "response");
         responseElement.append(responseElementChild);
 
+        // Add textarea for generated code
+        const codeTextarea = document.createElement("textarea");
+        codeTextarea.setAttribute("readonly", "");
+        codeTextarea.style.width = "97%";
+        codeTextarea.style.height = "150px";
+        codeTextarea.style.marginTop = "10px";
+
+        // Add copy button for generated code
+        const copyButton = document.createElement("button");
+        copyButton.setAttribute("type", "button");
+        copyButton.textContent = "Copy Code";
+        copyButton.addEventListener("click", function () {
+            codeTextarea.select();
+            window.alert("Code copied!")
+            document.execCommand("copy");
+        });
+
+        const generateButton = document.createElement("button");
+        generateButton.setAttribute("type", "button");
+        generateButton.textContent = "Generate Code";
+        generateButton.addEventListener("click", function () {
+            generateCode(endpoint, codeTextarea);
+        });
+        formElement.appendChild(generateButton);
+
         container.append(formTitle);
         container.append(formElement);
-        container.append(responseElement)
+        container.append(responseElement);
+        container.appendChild(codeTextarea);
+        container.appendChild(copyButton);
+
+
 
         document.querySelector("body").append(container);
     }
+
+
+    function generateCode(endpoint, textarea) {
+        let bodyParams = [];
+        let queryParams = [];
+        let routeParams = [];
+        let fileParams = [];
+
+        endpoint.body.forEach(field => {
+            bodyParams.push(`${field}`);
+        });
+
+        endpoint.query.forEach(field => {
+            queryParams.push(`${field}`);
+        });
+
+        endpoint.params.forEach(field => {
+            routeParams.push(`${field}`);
+        });
+
+        endpoint.files.forEach(fileObj => {
+            if (fileObj.type === 'unique') {
+                fileParams.push(`${fileObj.name}`);
+            } else {
+                fileParams.push(`${fileObj.name}Files`);
+            }
+        });
+
+        let code = `async function ${endpoint.id}_request(`;
+
+        if (bodyParams.length > 0) {
+            code += bodyParams.join(', ');
+        }
+
+        if (queryParams.length > 0) {
+            if (bodyParams.length > 0) {
+                code += ', ';
+            }
+            code += queryParams.join(', ');
+        }
+
+        if (routeParams.length > 0) {
+            if (bodyParams.length > 0 || queryParams.length > 0) {
+                code += ', ';
+            }
+            code += routeParams.join(', ');
+        }
+
+        if (fileParams.length > 0) {
+            if (bodyParams.length > 0 || queryParams.length > 0 || routeParams.length > 0) {
+                code += ', ';
+            }
+            code += fileParams.join(', ');
+        }
+
+        code += `) {\n`;
+
+        let params = [];
+
+        if (queryParams.length > 0) {
+            queryParams.forEach(field => {
+                params.push(`${field}=${field}`);
+            });
+        }
+
+        if (routeParams.length > 0) {
+            routeParams.forEach(field => {
+                params.push(`${field}=${field}`);
+            });
+        }
+
+        let url = `'${endpoint.url}'`;
+        if (params.length > 0) {
+            url += '?' + params.join('&');
+        }
+
+        code += `   const formData = new FormData();\n`;
+
+        if (bodyParams.length > 0) {
+            bodyParams.forEach(field => {
+                code += `   formData.append('${field}', ${field});\n`;
+            });
+        }
+
+        if (fileParams.length > 0) {
+            fileParams.forEach((file, index) => {
+                const fileObj = endpoint.files[index];
+                if (fileObj.type === 'multiple') {
+                    code += `   for (const fileItem of ${file}.files) {\n`;
+                    code += `       formData.append('${fileObj.name}', fileItem);\n`;
+                    code += `   }\n`;
+                } else {
+                    code += `   formData.append('${fileObj.name}', ${file});\n`;
+                }
+            });
+        }
+
+        code += `   const response = await fetch(${url}, {\n`;
+        code += `       method: '${endpoint.method}',\n`;
+        code += `       body: formData,\n`;
+        code += `   });\n`;
+        code += `   const data = await response.json();\n`;
+        code += `   return data;\n`;
+        code += `}\n`;
+
+        // Append the textarea and copy button to the form container
+        textarea.textContent = code;
+    }
+
+
+
+
+
 
     function saveFormValues(formId) {
         const formInputs = document.querySelectorAll(`#${formId} input[type="text"]`);
@@ -399,32 +572,33 @@
             }
 
             // Append file inputs to the FormData object
-            for (const fileField of endpoint.files) {
-                const fileInput = document.querySelector(`#${endpoint.id} #` + fileField);
+            for (const fileObject of endpoint.files) {
+                const fileInput = document.querySelector(`#${endpoint.id} #` + fileObject.name);
                 if (fileInput.files.length > 0) {
                     for (const file of fileInput.files) {
-                        formData.append(fileField, file);
+                        formData.append(fileObject.name, file);
                     }
                 }
             }
 
+
             // Append query parameters to the URL
             const urlQuery = new URLSearchParams(query);
             const queryLength = Object.keys(query).length;
-            let url = `https://302dffd6-e2c6-4427-ab6a-3ee2750fe269-00-31f3r0ok0b021.picard.replit.dev${route}`;
+            let url = `http://localhost:3000${route}`;
             if (queryLength > 0) {
                 url += '?' + urlQuery;
             }
 
-			console.log(params);
+            console.log(params);
 
             // Handle params array if specified
-			for(const param in params) {
-				console.log(param);
-				url = url.replace(`:${param}`, params[param]);
-			};
+            for (const param in params) {
+                console.log(param);
+                url = url.replace(`:${param}`, params[param]);
+            };
 
-			console.log(url);
+            console.log(url);
 
             // Send the API request with the FormData object
             const response = await fetch(url, {
@@ -476,9 +650,9 @@
             });
 
             let params = {};
-			endpoint.params.forEach(value => {
-				params[value] = document.querySelector(`#${endpoint.id} #` + value).value;
-			});
+            endpoint.params.forEach(value => {
+                params[value] = document.querySelector(`#${endpoint.id} #` + value).value;
+            });
 
             const response = await handleAPIRequest(endpoint.url, endpoint.method, body, params, query, endpoint);
 
