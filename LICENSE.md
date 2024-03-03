@@ -22,9 +22,11 @@ Au sens du présent Accord de Licence, les termes suivants auront les significat
 
 1.4 "Licencié" réfère à toute personne physique ou morale qui, en acceptant les termes du présent Accord, se voit octroyer le droit d'utiliser le Logiciel conformément aux stipulations ci-après.
 
+1.5 "Mise à jour de sécurité" désigne tout correctif, patch ou mise à jour du Logiciel fourni par le Concédant pour corriger une vulnérabilité de sécurité connue ou potentielle.
+
 2. **Objet**
 
-Le présent Accord a pour objet de définir les conditions dans lesquelles le Concédant accorde au Licencié un droit d'utilisation non exclusif, non cessible et non transférable du Logiciel.
+Le présent Accord a pour objet de définir les conditions dans lesquelles le Concédant accorde au Licencié un droit d'utilisation non exclusif, non cessible et non transférable du Logiciel, sous réserve que le Licencié installe toutes les mises à jour de sécurité fournies par le Concédant dans les plus brefs délais suivant leur publication.
 
 3. **Droits de Propriété Intellectuelle**
 
@@ -48,9 +50,11 @@ Le présent Accord a pour objet de définir les conditions dans lesquelles le Co
 
 4.7 L'utilisation du Logiciel à des fins commerciales nécessite un accord écrit préalable du Concédant.
 
+4.8 Le Licencié s'engage à installer toutes les mises à jour de sécurité fournies par le Concédant dans les plus brefs délais suivant leur publication. Le Licencié reconnaît que le défaut d'installer une mise à jour de sécurité peut exposer le Logiciel à des risques de sécurité et peut entraîner la résiliation de la Licence.
+
 5. **Durée**
 
-Ce contrat est conclu pour une durée indéterminée. Il peut être résilié par le Concédant de plein droit, sans préavis ni indemnité, en cas de violation par le Licencié de l'une des obligations lui incombant.
+Ce contrat est conclu pour une durée indéterminée. Il peut être résilié par le Concédant de plein droit, sans préavis ni indemnité, en cas de violation par le Licencié de l'une des obligations lui incombant, y compris en cas de défaut d'installation d'une mise à jour de sécurité.
 
 6. **Limitation de Responsabilité**
 
@@ -62,7 +66,7 @@ Ce contrat est conclu pour une durée indéterminée. Il peut être résilié pa
 
 Le présent Accord est régi par le droit français. Tout litige découlant de l'interprétation ou de l'exécution du présent Accord sera soumis à la compétence exclusive des tribunaux français.
 
-Fait à Valenciennes, le 21 février 2024.
+Fait à Valenciennes, le 03 février 2024.
 
 Pour accord,
 
