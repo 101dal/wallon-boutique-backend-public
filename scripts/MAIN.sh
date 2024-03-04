@@ -114,6 +114,24 @@ fi
 
 printvoid
 
+=
+read -p "Enter the email key (it must be a RESEND key otherwise it will no work): " email_key
+
+read -p "Enter the server full URL (leave empty if using http://localhost:PORT): " server_full_url
+
+if [ -z "$server_full_url" ]; then
+    server_full_url="http://localhost:\${PORT}"
+fi
+
+read -p "Enter the email sender (leave empty to default wallonboutique@resend.dev but if saying something else you MUST have the right to do so in resend dashboard): " email_sender
+
+if [ -z "$server_full_url" ]; then
+    email_sender="wallonboutique@resend.dev"
+fi
+
+printvoid
+
+
 # Generate a random 16-character string
 secret=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 16)
 
@@ -121,7 +139,7 @@ echo "Installing the server with all the information"
 echo
 read -p "Do you want to start the server after the installation? [Yy/Nn]" answer
 if [[ "$answer" == [Yy] ]]; then
-    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --secret "$secret" --start-line 1
+    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --email-key "$email_key" --server-full-url "$server_full_url" --email-sender "$email_sender" --secret "$secret" --start-line 1
 else
-    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --secret "$secret"
+    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --email-key "$email_key" --server-full-url "$server_full_url" --email-sender "$email_sender" --secret "$secret"
 fi

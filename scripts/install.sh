@@ -18,6 +18,18 @@ update_env_file() {
     sed -i "s/^DB_HOST=.*/DB_HOST=$DB_HOST/" "$ENV_FILE"
   fi
 
+  if [ -n "$EMAIL_KEY" ]; then
+    sed -i "s/^EMAIL_KEY=.*/EMAIL_KEY=$EMAIL_KEY/" "$ENV_FILE"
+  fi
+
+  if [ -n "$SERVER_FULL_URL" ]; then
+    sed -i "s/^SERVER_FULL_URL=.*/SERVER_FULL_URL=$SERVER_FULL_URL/" "$ENV_FILE"
+  fi
+
+  if [ -n "$EMAIL_SENDER" ]; then
+    sed -i "s/^EMAIL_SENDER=.*/EMAIL_SENDER=$EMAIL_SENDER/" "$ENV_FILE"
+  fi
+
   if [ -n "$SECRET" ]; then
     sed -i "s/^SECRET=.*/SECRET=$SECRET/" "$ENV_FILE"
   fi
@@ -62,6 +74,18 @@ while [[ $# -gt 0 ]]; do
       ;;
     --db-host)
       DB_HOST="$2"
+      shift 2
+      ;;
+    --email-key)
+      EMAIL_KEY="$2"
+      shift 2
+      ;;
+    --server-full-url)
+      SERVER_FULL_URL="$2"
+      shift 2
+      ;;
+    --email-sender)
+      EMAIL_SENDER="$2"
       shift 2
       ;;
     --secret)
