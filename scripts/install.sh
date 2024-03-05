@@ -18,6 +18,10 @@ update_env_file() {
     sed -i "s/^DB_HOST=.*/DB_HOST=$DB_HOST/" "$ENV_FILE"
   fi
 
+  if [ -n "$TEST_MODE" ]; then
+    sed -i "s/^TEST_MODE=.*/TEST_MODE=$TEST_MODE/" "$ENV_FILE"
+  fi
+
   if [ -n "$EMAIL_KEY" ]; then
     sed -i "s/^EMAIL_KEY=.*/EMAIL_KEY=$EMAIL_KEY/" "$ENV_FILE"
   fi
@@ -74,6 +78,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --db-host)
       DB_HOST="$2"
+      shift 2
+      ;;
+    --test-mode)
+      TEST_MODE="$2"
       shift 2
       ;;
     --email-key)
@@ -142,6 +150,9 @@ DB_PORT=5432
 PORT=3000
 ASSETS_FOLDER=\${PWD}/assets
 LOGGING_FOLDER=\${PWD}/../logs
+
+# DO NOT CHANGE TEST_MODE UNLESS YOU ARE SURE ABOUT THAT
+TEST_MODE=
 
 # JWT configuration
 SECRET=# Server side secret DO NOT SHARE FOR MORE SECURITY

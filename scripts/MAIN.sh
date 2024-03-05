@@ -38,7 +38,7 @@ check_and_install_command() {
 
 # Check and install required commands
 # Check if tar is installed
-if ! command -v tar &> /dev/null; then
+if ! command -v tar &>/dev/null; then
     # Install tar
     sudo apt-get update
     sudo apt-get install tar
@@ -125,12 +125,19 @@ fi
 
 read -p "Enter the email sender (leave empty to default wallonboutique@resend.dev but if saying something else you MUST have the right to do so in resend dashboard): " email_sender
 
-if [ -z "$server_full_url" ]; then
+if [ -z "$email_sender" ]; then
     email_sender="wallonboutique@resend.dev"
 fi
 
 printvoid
 
+read -p "Do you want to boot the server in TEST_MODE. BE CAREFUL, ONLY BOOT IN TEST_MODE IF YOU ARE DEPLOYING THE SERVER TO THE CLIENTS AND IF IT IS ONLY FOR TESTING PURPOSES [Yy/Nn] " test_mode
+
+if [[ "$test_mode" == [Yy] ]]; then
+    test_mode="true"
+else
+    test_mode="false"
+fi
 
 # Generate a random 16-character string
 secret=$(head /dev/urandom | tr -dc A-Za-z0-9 | head -c 16)
@@ -139,7 +146,7 @@ echo "Installing the server with all the information"
 echo
 read -p "Do you want to start the server after the installation? [Yy/Nn]" answer
 if [[ "$answer" == [Yy] ]]; then
-    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --email-key "$email_key" --server-full-url "$server_full_url" --email-sender "$email_sender" --secret "$secret" --start-line 1
+    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --test_mode "$test_mode" --email-key "$email_key" --server-full-url "$server_full_url" --email-sender "$email_sender" --secret "$secret" --start-line 1
 else
-    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --email-key "$email_key" --server-full-url "$server_full_url" --email-sender "$email_sender" --secret "$secret"
+    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --test_mode "$test_mode" --email-key "$email_key" --server-full-url "$server_full_url" --email-sender "$email_sender" --secret "$secret"
 fi
