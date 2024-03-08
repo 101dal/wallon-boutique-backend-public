@@ -114,7 +114,7 @@ fi
 
 printvoid
 
-=
+
 read -p "Enter the email key (it must be a RESEND key otherwise it will no work): " email_key
 
 read -p "Enter the server full URL (leave empty if using http://localhost:PORT): " server_full_url
