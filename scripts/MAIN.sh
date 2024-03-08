@@ -131,7 +131,7 @@ fi
 
 printvoid
 
-read -p "Do you want to boot the server in TEST_MODE. BE CAREFUL, ONLY BOOT IN TEST_MODE IF YOU ARE DEPLOYING THE SERVER TO THE CLIENTS AND IF IT IS ONLY FOR TESTING PURPOSES [Yy/Nn] " test_mode
+read -p "Do you want to boot the server in TEST_MODE. BE CAREFUL, ONLY BOOT IN TEST_MODE IF YOU ARE NOT DEPLOYING THE SERVER TO THE CLIENTS AND IF IT IS ONLY FOR TESTING PURPOSES [Yy/Nn] " test_mode
 
 if [[ "$test_mode" == [Yy] ]]; then
     test_mode="true"
