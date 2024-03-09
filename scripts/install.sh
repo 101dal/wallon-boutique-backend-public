@@ -193,5 +193,12 @@ tar -xzvf "$BACKUP_DIR/$INSTALLER_TAG.tar.gz" -C "$MAIN_DIR"
 # Add debugging statements
 ls -la "$MAIN_DIR"
 
+echo
+echo
+echo "The server is installed, please refer to README.md is you have any questions. If you encounter a bug please signal it."
+echo
+echo
+
+
 # Start the script
 start_script
