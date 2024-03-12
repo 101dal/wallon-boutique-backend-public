@@ -37,17 +37,18 @@ check_and_install_command() {
 }
 
 # Check and install required commands
-# Check if tar is installed
-if ! command -v tar &>/dev/null; then
-    # Install tar
-    sudo apt-get update
-    sudo apt-get install tar
-fi
-
+check_and_install_command "tar"
 check_and_install_command "curl"
 check_and_install_command "unzip"
-check_and_install_command "bun"
 check_and_install_command "systemctl"
+
+# Check if Bun is installed
+if ! command -v "bun" &>/dev/null; then
+    echo "Error: 'bun' is not installed. Installing bun..."
+    curl -fsSL "https://bun.sh/install" | bash
+    # Wait for the installation to be finished and source the user's .bashrc
+    source ~/.bashrc
+fi
 
 # Check if PostgreSQL is installed
 if ! command -v psql &>/dev/null; then
@@ -68,7 +69,21 @@ fi
 systemctl enable postgresql
 
 printvoid
-echo "All the modules have been checked... Now installing the server..."
+echo "All the modules have been checked... Now checking if the server is already installed..."
+echo
+echo
+
+# Check if the server is already installed
+if [ -d "./server" ]; then
+    read -p "The server is already installed. Do you want to start it directly? [Yy/Nn]" answer
+    if [[ "$answer" == [Yy] ]]; then
+        echo "Starting the server..."
+        bash ./start.sh
+        exit 0
+    fi
+fi
+
+echo "Installing the server..."
 echo
 echo
 
@@ -114,7 +129,6 @@ fi
 
 printvoid
 
-
 read -p "Enter the email key (it must be a RESEND key otherwise it will no work): " email_key
 
 read -p "Enter the server full URL (leave empty if using http://localhost:PORT): " server_full_url
@@ -146,7 +160,7 @@ echo "Installing the server with all the information"
 echo
 read -p "Do you want to start the server after the installation? [Yy/Nn]" answer
 if [[ "$answer" == [Yy] ]]; then
-    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --test_mode "$test_mode" --email-key "$email_key" --server-full-url "$server_full_url" --email-sender "$email_sender" --secret "$secret" --start-line 1
+    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --test-mode "$test_mode" --email-key "$email_key" --server-full-url "$server_full_url" --email-sender "$email_sender" --secret "$secret" --start-line 1
 else
-    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --test_mode "$test_mode" --email-key "$email_key" --server-full-url "$server_full_url" --email-sender "$email_sender" --secret "$secret"
+    bash ./install.sh --db-user "$pg_username" --db-password "$pg_password" --db-name "$pg_database" --db-host "$pg_host" --test-mode "$test_mode" --email-key "$email_key" --server-full-url "$server_full_url" --email-sender "$email_sender" --secret "$secret"
 fi

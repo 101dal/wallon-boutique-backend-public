@@ -1,17 +1,7 @@
 #!/bin/bash
 
-# Check if the script is running as root
-if [ "$(id -u)" -ne 0 ]; then
-    echo "This script must be run as root. Please switch to root ('sudo su') before running it." >&2
-    exit 1
-fi
 
-if ! command -v bun &>/dev/null; then
-    echo "Error: 'bun' is not installed. Please install it from bun.sh before running this script."
-    exit 1
-fi
-
-echo "Server starting..."
+echo "Server starting... Ignoring every missing packages. Assuming they were already installed from MAIN.sh"
 
 # Config
 REPO="101dal/wallon-boutique-backend-public"

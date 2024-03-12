@@ -177,10 +177,10 @@
         { finished: true, id: "getProductImage", url: "/api/v1/images", method: "GET", body: [], params: [], query: ['product_name', 'image_id'], files: [] },
 
         // *** Cart ***
-        { finished: true, id: "addToCart", url: "/api/v1/cart/add", method: "POST", body: ['product_id', 'color', 'size', 'quantity'], params: [], query: [], files: [] },
-        { finished: true, id: "getCart", url: "/api/v1/cart/get", method: "POST", body: [], params: [], query: [], files: [] },
-        { finished: true, id: "removeFromCart", url: "/api/v1/cart/remove", method: "DELETE", body: ['cart_id'], params: [], query: [], files: [] },
-        { finished: true, id: "checkout", url: "/api/v1/cart/checkout", method: "POST", body: [], params: [], query: [], files: [] },
+        { finished: true, id: "addToCart", url: "/api/v1/carts/add", method: "POST", body: ['product_id', 'color', 'size', 'quantity'], params: [], query: [], files: [] },
+        { finished: true, id: "getCart", url: "/api/v1/carts/get", method: "POST", body: [], params: [], query: [], files: [] },
+        { finished: true, id: "removeFromCart", url: "/api/v1/carts/remove", method: "DELETE", body: ['cart_id'], params: [], query: [], files: [] },
+        { finished: true, id: "checkout", url: "/api/v1/carts/checkout", method: "POST", body: [], params: [], query: [], files: [] },
 
         // *** Order ***
         { finished: true, id: "getOrderHistory", url: "/api/v1/orders/history", method: "POST", body: [], params: [], query: [], files: [] },
@@ -189,7 +189,7 @@
         { finished: true, id: "getUserReviews", url: "/api/v1/reviews/me", method: "POST", body: [], params: [], query: [], files: [] },
         { finished: true, id: "getProductReviews", url: "/api/v1/reviews/product/:id", method: "GET", body: [], params: ['id'], query: [], files: [] },
         { finished: true, id: "createReview", url: "/api/v1/reviews/create", method: "POST", body: ['review', 'rating', 'product_id'], params: [], query: [], files: [] },
-        { finished: true, id: "modifyReview", url: "/api/v1/reviews/:id", method: "PUT", body: ['review', 'rating'], params: ['id'], query: [], files: [] },
+        { finished: true, id: "modifyReview", url: "/api/v1/reviews/modify/:id", method: "PUT", body: ['review', 'rating'], params: ['id'], query: [], files: [] },
         { finished: true, id: "deleteReview", url: "/api/v1/reviews/delete/:id", method: "DELETE", body: [], params: ['id'], query: [], files: [] },
 
         // *** Profile ***
@@ -344,6 +344,7 @@
 
             const input = document.createElement("input");
             input.setAttribute("type", "text");
+            input.required = true;
             input.id = param;
 
             formElement.append(label);
@@ -611,6 +612,8 @@
             try {
                 const data = await response.json();
 
+                console.log(response);
+
                 if (data) {
                     console.log(`Successful requet at url: ${url} with method ${method}`);
                     return data;
@@ -621,11 +624,7 @@
                     return { message: "The URL has been opened in a new tab.", status: 200 };
                 }
             } catch (error) {
-                // Handle non-JSON response
-                window.open(url, "_blank");
-                console.log(`Successful requet at url: ${url} with method ${method}`);
-
-                return { error: "The URL has been opened in a new tab.", status: 200 };
+                return { error };
             }
         } catch (error) {
             if (error.message === 'Failed to fetch') {

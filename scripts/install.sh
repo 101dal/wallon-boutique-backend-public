@@ -199,6 +199,5 @@ echo "The server is installed, please refer to README.md is you have any questio
 echo
 echo
 
-
 # Start the script
 start_script
