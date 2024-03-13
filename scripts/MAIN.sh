@@ -47,7 +47,7 @@ if ! command -v "bun" &>/dev/null; then
     echo "Error: 'bun' is not installed. Installing bun..."
     curl -fsSL "https://bun.sh/install" | bash
     # Wait for the installation to be finished and source the user's .bashrc
-    source /$(whoami)/.bashrc
+    source "/$(whoami)/.bashrc"
 fi
 
 # Check if PostgreSQL is installed
