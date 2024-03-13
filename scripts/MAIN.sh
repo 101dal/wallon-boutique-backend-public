@@ -47,7 +47,7 @@ if ! command -v "bun" &>/dev/null; then
     echo "Error: 'bun' is not installed. Installing bun..."
     curl -fsSL "https://bun.sh/install" | bash
     # Wait for the installation to be finished and source the user's .bashrc
-    source ~/.bashrc
+    source /$(whoami)/.bashrc
 fi
 
 # Check if PostgreSQL is installed
@@ -119,6 +119,10 @@ else
     read -p "Enter PostgreSQL database name: " pg_database
     read -p "Enter PostgreSQL host: " pg_host
     read -p "Enter PostgreSQL port (press Enter for default 5432): " pg_port
+
+    if [ -z "$pg_port" ]; then
+        pg_port="5432"
+    fi
 
     echo
     echo "Username: $pg_username"
