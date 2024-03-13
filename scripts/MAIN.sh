@@ -47,7 +47,7 @@ if ! command -v "bun" &>/dev/null; then
     echo "Error: 'bun' is not installed. Installing bun..."
     curl -fsSL "https://bun.sh/install" | bash
     # Wait for the installation to be finished and source the user's .bashrc
-    source ~/.bashrc
+    source /$(whoami)/.bashrc
 fi
 
 # Check if PostgreSQL is installed
@@ -87,7 +87,6 @@ echo "Installing the server..."
 echo
 echo
 
-pg_host=""
 read -p "Do you want to install the database (if you already have a database, answer N/n)? [Yy/Nn]" answer
 if [[ "$answer" == [Yy] ]]; then
     echo "Installing the database..."
@@ -101,13 +100,8 @@ if [[ "$answer" == [Yy] ]]; then
     pg_username=$(echo "$pg_info" | grep "Username" | awk -F ': ' '{print $2}')
     pg_password=$(echo "$pg_info" | grep "Password" | awk -F ': ' '{print $2}')
     pg_database=$(echo "$pg_info" | grep "Database" | awk -F ': ' '{print $2}')
+    pg_host=$(echo "$pg_info" | grep "Host" | awk -F ': ' '{print $2}')
     pg_port=$(echo "$pg_info" | grep "Port" | awk -F ': ' '{print $2}')
-
-    # Display extracted information
-    echo "Username: $pg_username"
-    echo "Password: $pg_password"
-    echo "Database: $pg_database"
-    echo "Port: $pg_port"
 
     rm "/tmp/pg_info.txt"
 
@@ -120,12 +114,21 @@ else
     read -p "Enter PostgreSQL host: " pg_host
     read -p "Enter PostgreSQL port (press Enter for default 5432): " pg_port
 
-    echo
-    echo "Username: $pg_username"
-    echo "Password: $pg_password"
-    echo "Database: $pg_database"
-    echo "Port: $pg_port"
+    if [ -z "$pg_port" ]; then
+        pg_port="5432"
+    fi
+
+    
 fi
+
+
+# Display extracted information
+echo
+echo "Username: $pg_username"
+echo "Password: $pg_password"
+echo "Database: $pg_database"
+echo "Host: $pg_host"
+echo "Port: $pg_port"
 
 printvoid
 
@@ -134,7 +137,7 @@ read -p "Enter the email key (it must be a RESEND key otherwise it will no work)
 read -p "Enter the server full URL (leave empty if using http://localhost:PORT): " server_full_url
 
 if [ -z "$server_full_url" ]; then
-    server_full_url="http://localhost:\${PORT}"
+    server_full_url='http://localhost:${PORT}'
 fi
 
 read -p "Enter the email sender (leave empty to default wallonboutique@resend.dev but if saying something else you MUST have the right to do so in resend dashboard): " email_sender
