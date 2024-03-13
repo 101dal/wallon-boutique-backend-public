@@ -100,7 +100,7 @@ if [[ "$answer" == [Yy] ]]; then
     pg_username=$(echo "$pg_info" | grep "Username" | awk -F ': ' '{print $2}')
     pg_password=$(echo "$pg_info" | grep "Password" | awk -F ': ' '{print $2}')
     pg_database=$(echo "$pg_info" | grep "Database" | awk -F ': ' '{print $2}')
-    pg_host=$(echo "$pg_info" | grep "Host" | awk -F ': ' '{print $2}')
+    pg_host="localhost"
     pg_port=$(echo "$pg_info" | grep "Port" | awk -F ': ' '{print $2}')
 
     rm "/tmp/pg_info.txt"
