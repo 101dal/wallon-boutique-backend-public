@@ -128,6 +128,7 @@ else
     echo "Username: $pg_username"
     echo "Password: $pg_password"
     echo "Database: $pg_database"
+    echo "Host: $pg_host"
     echo "Port: $pg_port"
 fi
 
