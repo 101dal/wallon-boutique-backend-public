@@ -45,7 +45,7 @@ Le serveur gère diverses fonctionnalités pour le site d'achat en ligne du Lyc�
   - Rechercher des produits
   - Créer un produit (Admin)
   - Mettre à jour un produit (Admin)
-  - Mettre à jour l'inventaire d'un produit (Admin)
+  - Mettre à jour l'inventaire d'un produit (Employee, Admin)
   - Supprimer un produit (Admin)
 
 - Gestion des utilisateurs
