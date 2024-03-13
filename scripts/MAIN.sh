@@ -118,6 +118,10 @@ else
         pg_port="5432"
     fi
 
+    if [ -z "$pg_port" ]; then
+        pg_port="5432"
+    fi
+
     
 fi
 

@@ -3,9 +3,11 @@
 rm "INSTALLER.tar.gz"
 rm "release.tar.gz"
 
+ORIGINAL_DIR=$(pwd)
+
 # Define directories and files for the first script
-SOURCE_DIR_1="/mnt/c/Users/augus/Desktop/server/wallon-boutique-backend-public/scripts"
-OUTPUT_DIR_1="/mnt/c/Users/augus/Desktop/server/wallon-boutique-backend-public"
+SOURCE_DIR_1="$(pwd)/scripts"
+OUTPUT_DIR_1="$(pwd)"
 INCLUDE_FILES_1=("install.sh" "pg_install.sh" "start.sh" "MAIN.sh" "../IMPORTANT.txt" "../LICENSE.md" "../README.md")
 TAR_FILE_1="INSTALLER.tar.gz"
 
@@ -39,8 +41,12 @@ rm -rf "$TEMP_DIR_1"
 echo "Compression complete. Tar file: $OUTPUT_DIR_1/$TAR_FILE_1"
 
 # Define directories and files for the second script
-SOURCE_DIR_2="/mnt/c/Users/augus/Desktop/server/wallon-boutique-backend-public/src"
-OUTPUT_DIR_2="/mnt/c/Users/augus/Desktop/server/wallon-boutique-backend-public"
+
+# Return to the original folder
+cd $ORIGINAL_DIR
+
+SOURCE_DIR_2="$(pwd)/src"
+OUTPUT_DIR_2="$(pwd)"
 INCLUDE_FILES_2=("index.html" "package.json" "server.js")
 TAR_FILE_2="release.tar.gz"
 
