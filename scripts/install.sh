@@ -27,7 +27,7 @@ update_env_file() {
   fi
 
   if [ -n "$SERVER_FULL_URL" ]; then
-    sed -i "s/^SERVER_FULL_URL=.*/SERVER_FULL_URL=$SERVER_FULL_URL/" "$ENV_FILE"
+    sed -i "s#^SERVER_FULL_URL=.*#SERVER_FULL_URL=$SERVER_FULL_URL#" "$ENV_FILE"
   fi
 
   if [ -n "$EMAIL_SENDER" ]; then
